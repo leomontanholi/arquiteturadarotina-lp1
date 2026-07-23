@@ -1,2094 +1,873 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#06060c">
-<title>Arquitetura da Rotina | Hard Mode Lifestyle</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-<link rel="preconnect" href="https://www.youtube.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  background: #06060c;
-  min-height: 100%;
-}
-
-:root {
-  --bg:            #06060c;
-  --bg2:           #0b0b14;
-  --surface-dark:  #0b0b14;
-  --surface-dark-2:#11111a;
-  --surface-light: #ffffff;
-  --surface-light-2:#f5f5f7;
-  --card:          rgba(255,255,255,0.045);
-  --card-h:        rgba(255,255,255,0.065);
-  --border:        rgba(255,255,255,0.08);
-  --border-h:      rgba(255,255,255,0.14);
-  --purple:        #5e17eb;
-  --purple-lt:     #6d28f0;
-  --purple-soft:   #7b3ff2;
-  --white:         #f0eaf8;
-  --muted:         rgba(240,234,248,0.68);
-  --dim:           rgba(240,234,248,0.44);
-  --text-dark:     #121212;
-  --muted-dark:    rgba(18,18,18,0.74);
-  --dim-dark:      rgba(18,18,18,0.52);
-  --border-dark:   rgba(18,18,18,0.10);
-  --r:             16px;
-  --pad:           20px;
-  --max:           1160px;
-  --max-narrow:    920px;
-  --shadow-sm:     0 10px 30px rgba(0,0,0,0.14);
-  --shadow-md:     0 18px 50px rgba(0,0,0,0.20);
-}
-
-body {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  background:
-    radial-gradient(ellipse 90% 55% at 50% 0%, rgba(94,23,235,0.10) 0%, transparent 58%),
-    radial-gradient(circle at 14% 12%, rgba(94,23,235,0.10), transparent 24%),
-    radial-gradient(circle at 86% 24%, rgba(94,23,235,0.08), transparent 22%),
-    linear-gradient(180deg, #06060c 0%, #0b0b14 100%);
-  color: var(--white);
-  font-family: 'Barlow', sans-serif;
-  font-size: 16px;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-p { text-wrap: pretty; }
-a { color: inherit; text-decoration: none; }
-img, iframe, video { max-width: 100%; display: block; }
-
-a, button { -webkit-tap-highlight-color: transparent; }
-
-a:focus,
-button:focus,
-.btn:focus {
-  outline: none;
-}
-
-a:focus-visible,
-button:focus-visible,
-.btn:focus-visible {
-  outline: 2px solid rgba(94,23,235,0.55);
-  outline-offset: 3px;
-  box-shadow: 0 0 0 6px rgba(94,23,235,0.16);
-  border-radius: 50px;
-}
-
-.wrap {
-  position: relative;
-  width: 100%;
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 var(--pad);
-}
-
-.wrap--narrow { max-width: var(--max-narrow); }
-
-.section-heading {
-  max-width: 100%;
-}
-
-.section-heading .divider {
-  margin-bottom: 18px;
-}
-
-section {
-  position: relative;
-  padding: 60px 0;
-}
-
-.section-first { border-top: none !important; padding-top: 0; }
-
-.section-dark {
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-  color: var(--white);
-}
-
-.section-light {
-  background: linear-gradient(180deg, var(--surface-light) 0%, var(--surface-light-2) 100%);
-  color: var(--text-dark);
-}
-
-.section-soft-dark {
-  background: linear-gradient(180deg, rgba(17,17,26,0.96) 0%, rgba(11,11,20,0.98) 100%);
-  color: var(--white);
-}
-
-.display {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-}
-
-.eyebrow {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--purple-soft);
-  line-height: 1.5;
-  display: inline-block;
-}
-
-.eyebrow--lg { font-size: 13px; }
-
-.divider {
-  width: 34px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--purple), transparent);
-  border-radius: 2px;
-  margin: 14px 0 24px;
-}
-
-.section-heading {
-  max-width: 760px;
-  margin-bottom: 32px;
-}
-
-.section-title {
-  font-size: clamp(28px, 10vw, 56px);
-  text-wrap: balance;
-  line-height: 0.96;
-}
-
-.section-sub {
-  font-size: 15px;
-  color: var(--muted);
-  margin-top: 10px;
-  max-width: 640px;
-  line-height: 1.6;
-}
-
-.body-p {
-  font-size: 16px;
-  color: var(--muted);
-  margin-bottom: 14px;
-}
-
-.body-p strong { color: var(--white); font-weight: 600; }
-
-.section-light .section-sub,
-.section-light .body-p,
-.section-light .testimonial__text,
-.section-light .testimonial__meta,
-.section-light .bonus-card__desc,
-.section-light .bonus-card__val,
-.section-light .offer-card__includes,
-.section-light .offer-stack li,
-.section-light .guarantee__text,
-.section-light .close__sub,
-.section-light .faq-a,
-.section-light .footer-copy,
-.section-light .foundation-note,
-.section-light .lesson-card__learn,
-.section-light .lesson-card__shift {
-  color: var(--muted-dark);
-}
-
-.section-light .section-title,
-.section-light .body-p strong,
-.section-light .testimonial__author,
-.section-light .bonus-card__title,
-.section-light .offer-card__product,
-.section-light .guarantee__title,
-.section-light .close__hl,
-.section-light .faq-q,
-.section-light .lesson-card__title,
-.section-light .foundation-card__title,
-.section-light .offer-price,
-.section-light .offer-cash strong {
-  color: var(--text-dark);
-}
-
-
-.section-light .offer-card {
-  background: linear-gradient(180deg, rgba(94,23,235,0.10), rgba(255,255,255,0.94));
-  border-color: rgba(94,23,235,0.18);
-  box-shadow: 0 14px 34px rgba(19,13,34,0.06), 0 10px 26px rgba(94,23,235,0.08);
-}
-
-.section-light .guarantee {
-  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.84));
-  border-color: rgba(18,18,18,0.10);
-  box-shadow: 0 14px 34px rgba(19,13,34,0.06);
-}
-
-.section-light .offer-card__product,
-.section-light .offer-price,
-.section-light .offer-stack__total,
-.section-light .guarantee__title,
-.section-light .faq-q,
-.section-light .faq-a strong,
-.section-light .guarantee__text strong {
-  color: var(--text-dark) !important;
-}
-
-.section-light .offer-card__includes,
-.section-light .offer-stack li,
-.section-light .offer-installments,
-.section-light .offer-or,
-.section-light .offer-cash,
-.section-light .offer-badge,
-.section-light .price-anchor,
-.section-light .guarantee__text,
-.section-light .faq-a {
-  color: var(--muted-dark);
-}
-
-.section-light .offer-stack li,
-.section-light .guarantee,
-.section-light .faq-item {
-  border-color: var(--border-dark);
-}
-
-.section-light .offer-badge::before,
-.section-light .faq-q span {
-  color: var(--purple);
-}
-
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 16px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  border: none;
-  border-radius: 50px;
-  padding: 0 28px;
-  min-height: 54px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-  text-align: center;
-}
-
-.btn--primary {
-  background: linear-gradient(135deg, #5e17eb 0%, #6922ee 100%);
-  color: var(--white);
-  box-shadow: 0 8px 24px rgba(94,23,235,0.34);
-}
-
-.btn--ghost {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border-h);
-  color: var(--white);
-}
-
-.section-light .btn--ghost {
-  background: rgba(18,18,18,0.03);
-  border-color: rgba(18,18,18,0.12);
-  color: var(--text-dark);
-}
-
-.btn--stacked {
-  flex-direction: column;
-  gap: 3px;
-  padding: 10px 24px;
-  white-space: normal;
-  line-height: 1.1;
-}
-
-.btn__line-main, .btn__line-sub { display: block; }
-.btn__line-main { font-size: 16px; }
-.btn__line-sub { font-size: 15px; letter-spacing: 0.12em; opacity: 0.92; }
-.btn__old-price {
-  text-decoration: line-through;
-  text-decoration-thickness: 1.5px;
-  text-decoration-color: currentColor;
-  opacity: 0.78;
-}
-
-.price-anchor {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--dim-dark);
-  margin-bottom: 8px;
-}
-.price-anchor span {
-  text-decoration: line-through;
-  text-decoration-thickness: 1.5px;
-  text-decoration-color: currentColor;
-}
-.section-dark .price-anchor,
-.section-soft-dark .price-anchor { color: var(--dim); }
-
-.cta-note {
-  text-align: center;
-  font-size: 12px;
-  color: var(--dim);
-  letter-spacing: 0.04em;
-  margin-top: 12px;
-}
-
-@media (hover: hover) {
-  .btn--primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(94,23,235,0.40);
-  }
-  .btn--ghost:hover {
-    transform: translateY(-2px);
-    background: rgba(255,255,255,0.06);
-    border-color: rgba(94,23,235,0.35);
-  }
-  .section-light .btn--ghost:hover {
-    background: rgba(18,18,18,0.06);
-  }
-}
-
-.hero {
-  padding: 25px 0 0;
-  text-align: center;
-}
-
-.hero__brand-mark {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 14px;
-}
-
-.hero__brand-mark img {
-  width: clamp(88px, 18vw, 126px);
-  height: auto;
-  opacity: 1;
-  filter: drop-shadow(0 10px 24px rgba(94,23,235,0.16));
-  pointer-events: none;
-  user-select: none;
-}
-
-.hero__headline {
-  font-size: clamp(30px, 9.4vw, 58px);
-  line-height: 0.94;
-  letter-spacing: -0.02em;
-  color: var(--white);
-  max-width: 340px;
-  margin: 0 auto;
-}
-
-.hero__headline .hero-line {
-  display: block;
-  white-space: nowrap;
-}
-
-.hero__headline em {
-  font-style: normal;
-  background: linear-gradient(135deg, #5e17eb 0%, #7b3ff2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero__sub {
-  font-size: clamp(16px, 2.15vw, 18px);
-  color: var(--muted);
-  max-width: 34ch;
-  margin: 20px auto 26px;
-  line-height: 1.6;
-  text-wrap: balance;
-}
-
-.hero__sub strong {
-  color: var(--white);
-  font-weight: 600;
-}
-
-.hero__video-section {
-  padding: 0;
-  max-width: 760px;
-  margin: 22px auto 0;
-}
-
-.hero__video-glass {
-  border-radius: 18px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  position: relative;
-  isolation: isolate;
-  aspect-ratio: 16 / 9;
-  background: #09090f;
-  box-shadow: var(--shadow-md);
-}
-
-.hero__video-host {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: #09090f;
-}
-
-.hero__video-host iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
-}
-
-.video-poster {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  border: none;
-  padding: 0;
-  background: #09090f;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  transition: opacity 0.28s ease, visibility 0.28s ease;
-}
-
-.video-poster img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.video-poster::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(6,6,12,0.08), rgba(6,6,12,0.24));
-}
-
-.video-poster.is-loading {
-  cursor: default;
-}
-
-.video-poster.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.video-poster__play {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  transform: translate(-50%, -50%);
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  background: #5e17eb;
-  border: 1px solid rgba(255,255,255,0.18);
-  display: grid;
-  place-items: center;
-  z-index: 2;
-  box-shadow: 0 16px 36px rgba(0,0,0,0.22);
-  transition: opacity 0.2s ease;
-}
-
-.video-poster.is-loading .video-poster__play,
-.video-poster.is-hidden .video-poster__play {
-  opacity: 0;
-}
-
-.video-poster__play::before {
-  content: '';
-  margin-left: 4px;
-  width: 0;
-  height: 0;
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
-  border-left: 20px solid var(--white);
-}
-
-.hero__cta {
-  margin: 24px auto 0;
-  max-width: 320px;
-  padding-bottom: 42px;
-}
-
-/* Testimonials */
-.testimonials-shell {
-  position: relative;
-}
-
-.testimonials-track[data-loop-ready="true"]{
-  scroll-behavior:auto;
-}
-
-.testimonials-track {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(258px, 84%);
-  gap: 12px;
-  overflow-x: auto;
-  padding: 2px 2px 8px;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  will-change: scroll-position;
-}
-
-.testimonials-track::-webkit-scrollbar { display: none; }
-
-.testimonials-track::after {
-  content: '';
-  width: 2px;
-}
-
-.testimonial {
-  scroll-snap-align: start;
-  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.80));
-  border: 1px solid rgba(18,18,18,0.10);
-  border-radius: 14px;
-  box-shadow: 0 12px 28px rgba(19,13,34,0.06);
-  padding: 18px 16px;
-  min-height: 100%;
-}
-
-.testimonial__head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.testimonial__photo {
-  width: 68px;
-  height: 68px;
-  border-radius: 16px;
-  object-fit: cover;
-  object-position: center;
-  flex-shrink: 0;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
-}
-
-.testimonial__identity {
-  min-width: 0;
-}
-
-.testimonial__text {
-  font-size: 14px;
-  line-height: 1.58;
-  margin-bottom: 12px;
-}
-
-.testimonial__author {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 15px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  line-height: 1.05;
-}
-
-.testimonial__meta {
-  font-size: 12px;
-  margin-top: 4px;
-}
-
-.testimonial__pill {
-  display: inline-flex;
-  margin-bottom: 12px;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: rgba(94,23,235,0.08);
-  color: var(--purple);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-}
-
-/* Before entering */
-.forwho-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-.forwho-col {
-  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 20px 16px;
-  box-shadow: var(--shadow-sm);
-}
-
-.forwho-col--yes {
-  border-color: rgba(94,23,235,0.28);
-  background: linear-gradient(180deg, rgba(94,23,235,0.11), rgba(255,255,255,0.03));
-}
-
-.forwho-col__title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 13px;
-  letter-spacing: 0.20em;
-  text-transform: uppercase;
-  margin-bottom: 14px;
-}
-
-.forwho-col--yes .forwho-col__title { color: var(--purple-soft); }
-.forwho-col--no .forwho-col__title { color: var(--dim); }
-
-.forwho-list { list-style: none; }
-
-.forwho-list li {
-  position: relative;
-  padding: 11px 0 11px 18px;
-  border-bottom: 1px solid var(--border);
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-.forwho-list li:last-child { border-bottom: none; }
-
-.forwho-list--yes li::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: var(--purple-soft);
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 1;
-}
-
-.forwho-list--no li::before {
-  content: '—';
-  position: absolute;
-  left: 0;
-  color: var(--dim);
-  font-weight: 700;
-}
-
-/* Foundation */
-.foundation-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
-
-.foundation-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.76));
-  border: 1px solid rgba(18,18,18,0.10);
-  border-radius: var(--r);
-  box-shadow: 0 14px 34px rgba(19,13,34,0.06);
-  padding: 20px 16px;
-}
-
-.foundation-card__n {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 44px;
-  line-height: 1;
-  margin-bottom: 14px;
-  background: linear-gradient(135deg, rgba(94,23,235,0.95), rgba(123,63,242,0.28));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.foundation-card__title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 19px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 8px;
-}
-
-.foundation-note {
-  margin-top: 10px;
-}
-
-/* Who speaks */
-.story-layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  align-items: start;
-}
-
-.story-quote {
-  background: linear-gradient(180deg, rgba(94,23,235,0.11), rgba(255,255,255,0.03));
-  border: 1px solid rgba(94,23,235,0.24);
-  border-radius: var(--r);
-  box-shadow: var(--shadow-sm);
-  padding: 24px 22px;
-}
-
-.story-quote p {
-  font-size: 18px;
-  font-style: italic;
-  color: var(--white);
-  line-height: 1.65;
-  margin-bottom: 12px;
-}
-
-.story-quote .attr {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--purple-soft);
-}
-
-/* Lessons */
-.lessons-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-.lesson-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 18px 16px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.09);
-  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-}
-
-.lesson-card::before,
-.bonus-card::before,
-.offer-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(94,23,235,0.75), transparent);
-}
-
-.lesson-card__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.lesson-card__badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  background: rgba(94,23,235,0.14);
-  color: var(--white);
-  font-size: 22px;
-  flex-shrink: 0;
-}
-
-.lesson-card__n {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--purple-soft);
-}
-
-.lesson-card__title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 22px;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  line-height: 1.02;
-}
-
-.lesson-card__learn,
-.lesson-card__shift {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.58;
-}
-
-.lesson-card__shift strong,
-.offer-cash strong,
-.guarantee__text strong,
-.close__sub strong,
-.faq-a strong {
-  color: var(--white);
-}
-
-.lesson-card__shift {
-  padding-top: 14px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-.lesson-card__shift strong {
-  display: block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--purple-soft);
-  margin-bottom: 6px;
-}
-
-.section-light .lesson-card__shift strong { color: var(--purple); }
-
-.section-light .story-quote p { color: var(--text-dark); }
-.section-light .story-quote .attr { color: var(--purple); }
-.section-dark .close__final { color: var(--dim); }
-
-/* Bonuses */
-.bonus-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-.bonus-card {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.82));
-  border: 1px solid rgba(18,18,18,0.10);
-  border-radius: 18px;
-  box-shadow: 0 14px 34px rgba(19,13,34,0.06);
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
-.bonus-card__media {
-  position: relative;
-  aspect-ratio: 16 / 6;
-  overflow: hidden;
-  background: #0a0a10;
-}
-
-.bonus-card__media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.08) 100%);
-  pointer-events: none;
-}
-
-.bonus-card__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  transform: none;
-}
-
-.bonus-card__content {
-  padding: 18px 16px 20px;
-}
-
-.bonus-card__lbl {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--purple);
-  margin-bottom: 8px;
-}
-
-.bonus-card__title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 22px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  margin-bottom: 8px;
-  line-height: 1.02;
-}
-
-.bonus-card__desc {
-  font-size: 14px;
-  line-height: 1.56;
-}
-
-.bonus-card__val {
-  margin-top: 14px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: line-through;
-  text-decoration-thickness: 1.5px;
-  text-decoration-color: currentColor;
-}
-
-/* Offer */
-.offer-wrap {
-  max-width: 560px;
-  margin: 0 auto;
-}
-
-.offer-card {
-  position: relative;
-  overflow: hidden;
-  padding: 26px 18px 28px;
-  background: linear-gradient(180deg, rgba(94,23,235,0.11), rgba(255,255,255,0.035));
-  border: 1px solid rgba(94,23,235,0.26);
-  border-radius: 18px;
-  box-shadow: 0 14px 40px rgba(94,23,235,0.11), var(--shadow-sm);
-  text-align: center;
-}
-
-.offer-card__product {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 22px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--white);
-  margin-bottom: 6px;
-}
-
-.offer-card__logo {
-  width: min(100%, 300px);
-  margin: 0 auto 10px;
-}
-
-.offer-card__logo img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.offer-card__includes {
-  font-size: 16px;
-  color: var(--dim);
-  margin-bottom: 24px;
-}
-
-.offer-stack {
-  list-style: none;
-  text-align: left;
-  margin-bottom: 24px;
-}
-
-.offer-stack li {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 15px;
-  color: var(--muted);
-}
-
-.offer-stack li:last-child { border-bottom: none; }
-
-.offer-stack li span:last-child {
-  color: inherit;
-  font-size: 13px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.offer-stack__total {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 19px;
-  text-transform: uppercase;
-  color: var(--white) !important;
-}
-
-.offer-stack__total span:last-child {
-  text-decoration: line-through;
-  color: inherit !important;
-  font-size: inherit !important;
-}
-
-.offer-price-block { margin: 20px 0; }
-
-.price-anchor--offer {
-  font-size: 17px;
-  margin-bottom: 10px;
-}
-
-.offer-installments {
-  font-size: 18px;
-  color: var(--dim);
-  letter-spacing: 0.02em;
-  margin-bottom: 8px;
-}
-
-.offer-installments--inline strong {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 38px;
-  color: var(--text-dark);
-  line-height: 0.95;
-  margin-left: 6px;
-}
-
-.offer-price { display: none; }
-
-.offer-price__cur {
-  font-size: 30px;
-  vertical-align: top;
-  margin-top: 10px;
-  display: inline-block;
-}
-
-.offer-price__dec { font-size: 44px; }
-.offer-or { display: none; }
-
-.offer-cash {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 21px;
-  color: var(--text-dark);
-}
-
-.offer-cash--inline {
-  display: block;
-  margin-top: 4px;
-}
-
-.offer-cash--inline .offer-or-inline,
-.offer-cash--inline .offer-cash-suffix {
-  color: var(--text-dark);
-}
-
-.offer-cash--inline strong {
-  color: var(--text-dark);
-}
-
-.offer-cta { margin-top: 24px; }
-
-.offer-badges {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  margin-top: 14px;
-  flex-wrap: wrap;
-}
-
-.offer-badge {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--dim);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.offer-badge::before {
-  content: '✓';
-  color: var(--purple-soft);
-  font-weight: 700;
-}
-
-.guarantee {
-  display: grid;
-  grid-template-columns: 36px 1fr;
-  gap: 14px;
-  align-items: start;
-  padding: 20px 18px;
-  margin-top: 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.03));
-  box-shadow: var(--shadow-sm);
-}
-
-.guarantee__icon {
-  font-size: 26px;
-  line-height: 1;
-  padding-top: 1px;
-}
-
-.guarantee__title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--white);
-  margin-bottom: 6px;
-}
-
-.guarantee__text {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-/* FAQ */
-.faq-item {
-  border-bottom: 1px solid var(--border);
-  padding: 18px 0;
-}
-.faq-item:first-of-type { border-top: 1px solid var(--border); }
-
-.faq-q {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--white);
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-}
-.faq-q span {
-  color: var(--purple-soft);
-  flex-shrink: 0;
-  font-size: 20px;
-  line-height: 1;
-  margin-top: 1px;
-}
-.faq-a {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-/* Closing */
-.close {
-  text-align: center;
-}
-
-.close__hl {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(28px, 10vw, 66px);
-  line-height: 0.98;
-  margin-bottom: 18px;
-  text-wrap: balance;
-}
-
-.close__hl .close-line {
-  display: block;
-}
-
-.close__hl em {
-  font-style: normal;
-  color: var(--purple-soft);
-}
-
-.close__sub {
-  font-size: 16px;
-  color: var(--muted);
-  line-height: 1.65;
-  margin-bottom: 34px;
-  max-width: 440px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.close__sub-plain {
-  color: inherit;
-}
-
-.close__cta {
-  max-width: 320px;
-  margin: 0 auto;
-}
-
-.close__final {
-  margin-top: 22px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--dim-dark);
-}
-
-/* Footer */
-footer {
-  padding: 24px var(--pad);
-  background: #06060c;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  text-align: center;
-  font-size: 14px;
-  color: #ffffff;
-  line-height: 1.8;
-}
-
-footer a { color: #ffffff; text-underline-offset: 3px; }
-
-@media (max-width: 639px) {
-  :root { --pad: 18px; }
-
-  section { padding: 62px 0; }
-
-  .hero { padding-top: 24px; }
-
-  .section-title {
-    font-size: clamp(26px, 9vw, 38px);
-    line-height: 0.98;
-  }
-
-  .section-sub,
-  .body-p,
-  .testimonial__text,
-  .lesson-card__learn,
-  .lesson-card__shift,
-  .bonus-card__desc,
-  .faq-a {
-    font-size: 14px;
-  }
-
-  .testimonial,
-  .forwho-col,
-  .foundation-card,
-  .lesson-card,
-  .bonus-card,
-  .offer-card,
-  .guarantee,
-  .story-quote {
-    border-radius: 16px;
-  }
-
-  .testimonials-track {
-    grid-auto-columns: minmax(246px, 84%);
-    gap: 10px;
-    padding-bottom: 6px;
-  }
-
-  .testimonial__photo {
-    width: 70px;
-    height: 70px;
-  }
-
-  .bonus-card__media {
-    aspect-ratio: 16 / 6;
-  }
-
-  .bonus-card__media img {
-    transform: none;
-  }
-
-  .bonus-card__content {
-    padding: 16px 14px 18px;
-  }
-
-  .offer-card {
-    padding: 24px 16px 26px;
-  }
-
-  .offer-price {
-    font-size: 60px;
-  }
-
-  .offer-price__cur {
-    font-size: 26px;
-  }
-
-  .offer-price__dec {
-    font-size: 38px;
-  }
-}
-
-@media (min-width: 640px) {
-  :root { --pad: 28px; }
-
-  body { font-size: 17px; }
-  section { padding: 80px 0; }
-  .hero { padding-top: 31px; }
-  .hero__cta { max-width: 360px; padding-bottom: 54px; }
-  .hero__sub { font-size: 17px; max-width: 560px; }
-
-  .hero__brand-mark { margin-bottom: 18px; }
-  .hero__brand-mark img { width: clamp(96px, 11vw, 132px); }
-
-  .hero__headline {
-    font-size: clamp(31px, 5.9vw, 58px);
-    max-width: 860px;
-  }
-
-  .hero__headline .hero-line {
-    display: inline;
-    white-space: normal;
-  }
-
-  .hero__headline .hero-line + .hero-line::before {
-    content: " ";
-  }
-
-  .foundation-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .forwho-grid { grid-template-columns: 1fr; gap: 14px; }
-  .story-layout { grid-template-columns: 1fr; gap: 26px; }
-  .lessons-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-  .bonus-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-  .testimonials-track {
-    grid-auto-flow: unset;
-    grid-auto-columns: unset;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    overflow: visible;
-  }
-
-  .testimonial__photo {
-    width: 74px;
-    height: 74px;
-  }
-
-  .offer-card { padding: 38px 34px 42px; }
-
-  .hero__cta .btn,
-  .close__cta .btn {
-    width: 100%;
-  }
-}
-
-@media (min-width: 980px) {
-  :root { --pad: 38px; }
-
-  .lessons-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .story-layout { grid-template-columns: 1.1fr .9fr; gap: 42px; }
-  .forwho-grid { grid-template-columns: 1.15fr .85fr; }
-}
-
-@media (min-width: 1180px) {
-  :root { --pad: 48px; }
-  .section-title { font-size: clamp(36px, 4vw, 54px); }
-}
-</style>
-  
-<script>
-  window.pixelId = "69e70383f0c4d9e3f6c5f9f3";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
-</script>
-  
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "weqhpv0nf7");
-</script>
-  
-  <script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aula gratuita Arquitetura da Rotina: entenda por que suas rotinas duram pouco e aprenda um método completo para construir uma rotina sustentável." />
+  <meta name="theme-color" content="#0f1014" />
+  <title>Aula Gratuita: Arquitetura da Rotina — Hard Mode</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --canvas: #ffffff;
+      --surface: #ffffff;
+      --surface-2: #f6f7fa;
+      --surface-3: #eef0f4;
+      --line: #e6e8ee;
+      --line-strong: #d5d9e2;
+      --stone: #b7bcc8;
+      --muted: #636b7a;
+      --ink: #0f1014;
+      --signal: #0f1014;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --font-display: "Space Grotesk", Arial, sans-serif;
+      --font-sans: "Inter", Arial, sans-serif;
+      --font-mono: "Space Mono", monospace;
+      --font-stroke: "Bebas Neue", Impact, sans-serif;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-card: 12px;
+      --shadow-soft: 0 1px 2px rgba(15, 16, 20, 0.06), 0 1px 1px rgba(15, 16, 20, 0.04);
+      --shadow-card: 0 8px 20px rgba(15, 16, 20, 0.08), 0 1px 2px rgba(15, 16, 20, 0.06);
+      --container: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection { background: var(--ink); color: #fff; }
+    a { color: inherit; }
+    button, input { font: inherit; }
+
+    .page-shell {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+    }
+
+    .page-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(15,16,20,.028) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15,16,20,.028) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, #000 0, transparent 760px);
+      z-index: 0;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--container));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      margin: 0;
+      font: 700 11px/1.4 var(--font-mono);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .topbar {
+      height: 74px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(14px);
+      position: relative;
+      z-index: 20;
+    }
+
+    .topbar-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
+      line-height: 0;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      display: block;
+      width: 142px;
+      height: auto;
+      max-height: 43px;
+      object-fit: contain;
+    }
+
+    .top-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font: 700 10px/1 var(--font-mono);
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--ink);
+      box-shadow: 0 0 0 4px rgba(15,16,20,.08);
+    }
+
+    .hero {
+      padding: 80px 0 64px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(350px, .8fr);
+      gap: 64px;
+      align-items: start;
+    }
+
+    .hero-copy { padding-top: 10px; }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 11px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,.82);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 24px;
+    }
+
+    .hero-kicker strong {
+      font: 700 10px/1 var(--font-mono);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .hero-kicker span {
+      padding-left: 12px;
+      border-left: 1px solid var(--line-strong);
+      font: 600 11px/1 var(--font-mono);
+      color: var(--muted);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font: 600 clamp(38px, 5vw, 66px)/1.01 var(--font-display);
+      letter-spacing: -.055em;
+      text-wrap: balance;
+    }
+
+    .hero-subheadline {
+      margin: 28px 0 0;
+      max-width: 690px;
+      color: #3d4350;
+      font-size: 18px;
+      line-height: 1.65;
+      text-wrap: pretty;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 52px;
+      border: 1px solid var(--ink);
+      border-radius: var(--radius-lg);
+      padding: 0 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--ink);
+      color: #fff;
+      font: 700 14px/1 var(--font-sans);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+      box-shadow: 0 2px 0 rgba(15,16,20,.18);
+    }
+
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(15,16,20,.16); }
+    .btn:active { transform: translateY(0); }
+    .btn:focus-visible { outline: 3px solid rgba(15,16,20,.18); outline-offset: 3px; }
+    .btn svg { width: 17px; height: 17px; }
+
+    .hero-micro {
+      max-width: 290px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .hero-rail {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.78);
+      overflow: hidden;
+      max-width: 700px;
+    }
+
+    .rail-item {
+      min-height: 82px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .rail-item + .rail-item { border-left: 1px solid var(--line); }
+    .rail-index { font: 700 10px/1 var(--font-mono); color: var(--stone); }
+    .rail-value { font: 600 13px/1.35 var(--font-display); letter-spacing: -.02em; }
+
+    .form-card {
+      position: sticky;
+      top: 28px;
+      background: var(--surface);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .form-card-head {
+      padding: 22px 24px 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-2);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .form-card-head h2 {
+      margin: 6px 0 0;
+      font: 600 23px/1.15 var(--font-display);
+      letter-spacing: -.035em;
+    }
+
+    .access-tag {
+      white-space: nowrap;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: #fff;
+      padding: 7px 9px;
+      color: var(--muted);
+      font: 700 9px/1 var(--font-mono);
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .lead-form { padding: 24px; }
+    .field { display: grid; gap: 8px; margin-bottom: 17px; }
+    .field label { font-size: 12px; font-weight: 700; color: #252832; }
+
+    .input-wrap { position: relative; }
+    .input-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      width: 17px;
+      height: 17px;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    input {
+      width: 100%;
+      height: 50px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      color: var(--ink);
+      padding: 0 14px 0 43px;
+      font-size: 14px;
+      outline: 0;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    input::placeholder { color: #989eaa; }
+    input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(15,16,20,.08); }
+    input[aria-invalid="true"] { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(220,38,38,.08); }
+
+    .field-hint {
+      margin: -1px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .submit-btn { width: 100%; margin-top: 5px; }
+    .submit-btn:disabled { cursor: wait; opacity: .68; transform: none; box-shadow: none; }
+
+    .form-message {
+      display: none;
+      margin: 14px 0 0;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .form-message.visible { display: block; }
+    .form-message.error { color: #b91c1c; }
+    .honeypot { position: absolute !important; left: -9999px !important; opacity: 0 !important; pointer-events: none !important; }
+
+    .privacy-line {
+      margin: 15px 0 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .privacy-line svg { width: 14px; height: 14px; flex: 0 0 auto; margin-top: 1px; }
+
+    .success-box {
+      display: none;
+      padding: 26px;
+      text-align: center;
+    }
+
+    .success-box.visible { display: block; }
+    .success-icon {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(22,163,74,.1);
+      color: var(--success);
+    }
+    .success-icon svg { width: 22px; height: 22px; }
+    .success-box h3 { margin: 0; font: 600 22px/1.2 var(--font-display); letter-spacing: -.03em; }
+    .success-box p { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+    .section { padding: 88px 0; }
+    .section.muted { background: var(--surface-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: minmax(230px,.45fr) minmax(0,1fr);
+      gap: 80px;
+      align-items: start;
+    }
+
+    .section-title {
+      margin: 12px 0 0;
+      font: 600 clamp(30px,4vw,48px)/1.06 var(--font-display);
+      letter-spacing: -.045em;
+      text-wrap: balance;
+    }
+
+    .qualification-card {
+      padding: 34px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-card);
+      background: #fff;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .qualification-card p {
+      margin: 0;
+      color: #313641;
+      font-size: clamp(17px,2vw,22px);
+      line-height: 1.65;
+      letter-spacing: -.015em;
+    }
+
+    .qualification-card strong { color: var(--ink); }
+
+    .benefit-list {
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .benefit {
+      display: grid;
+      grid-template-columns: 54px 1fr 28px;
+      gap: 20px;
+      align-items: start;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .benefit-number {
+      font: 700 11px/1 var(--font-mono);
+      color: var(--stone);
+      padding-top: 5px;
+    }
+
+    .benefit p {
+      margin: 0;
+      color: #3d4350;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .benefit strong { color: var(--ink); }
+    .benefit svg { width: 20px; height: 20px; color: var(--ink); margin-top: 2px; }
+
+    .credibility {
+      padding: 74px 0;
+      background: var(--ink);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .credibility::after {
+      content: "HARD MODE";
+      position: absolute;
+      right: -18px;
+      bottom: -45px;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,.11);
+      font: 400 160px/1 var(--font-stroke);
+      letter-spacing: .01em;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .credibility-inner {
+      max-width: 900px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .credibility .eyebrow { color: rgba(255,255,255,.5); }
+    .credibility blockquote {
+      margin: 18px 0 0;
+      font: 500 clamp(27px,4vw,46px)/1.18 var(--font-display);
+      letter-spacing: -.04em;
+      text-wrap: balance;
+    }
+
+    .protocol-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 16px;
+      margin-top: 34px;
+      max-width: 780px;
+    }
+
+    .protocol-item {
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .protocol-item span { display: block; font: 700 10px/1 var(--font-mono); color: rgba(255,255,255,.44); letter-spacing: .11em; text-transform: uppercase; }
+    .protocol-item strong { display: block; margin-top: 14px; font: 600 15px/1.3 var(--font-display); }
+
+    .final-cta { padding: 92px 0 100px; text-align: center; }
+    .final-cta-inner { max-width: 820px; margin: 0 auto; }
+    .final-cta .section-title { margin-inline: auto; }
+    .final-cta p:not(.eyebrow) { max-width: 620px; margin: 20px auto 30px; color: var(--muted); font-size: 16px; line-height: 1.65; }
+    .final-cta .btn { min-width: 280px; }
+
+    footer { border-top: 1px solid var(--line); padding: 24px 0 34px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; color: var(--muted); font: 700 10px/1.5 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .hero { padding-top: 56px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 42px; }
+      .form-card { position: relative; top: auto; max-width: 650px; }
+      .section-grid { grid-template-columns: 1fr; gap: 38px; }
+      .section-title { max-width: 720px; }
+    }
+
+    @media (max-width: 680px) {
+      .container { width: min(calc(100% - 28px), var(--container)); }
+      .topbar { height: 64px; }
+      .brand-logo { width: 124px; max-height: 38px; }
+      .top-status span:last-child { display: none; }
+      .hero { padding: 42px 0 44px; }
+      h1 { font-size: clamp(36px, 11vw, 49px); }
+      .hero-subheadline { font-size: 16px; line-height: 1.6; }
+      .hero-actions { align-items: stretch; }
+      .hero-actions .btn { width: 100%; }
+      .hero-micro { max-width: none; }
+      .hero-rail { grid-template-columns: 1fr; }
+      .rail-item + .rail-item { border-left: 0; border-top: 1px solid var(--line); }
+      .form-card-head, .lead-form { padding: 20px; }
+      .section { padding: 64px 0; }
+      .qualification-card { padding: 24px; }
+      .benefit { grid-template-columns: 38px 1fr; gap: 12px; }
+      .benefit svg { display: none; }
+      .protocol-grid { grid-template-columns: 1fr; }
+      .credibility::after { font-size: 92px; bottom: -22px; }
+      .final-cta { padding: 72px 0 80px; }
+      .final-cta .btn { min-width: 0; width: 100%; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
 <body>
-
-<section class="hero section-first section-dark" id="top">
-  <div class="wrap wrap--narrow">
-    <div class="hero__inner">
-      <div class="hero__brand-mark" aria-hidden="true">
-        <img src="./assets/img/logo-hard-mode.png" alt="Hard Mode Lifestyle">
-      </div>
-
-      <h1 class="display hero__headline reveal">
-        <span class="hero-line">COMO DEIXAR DE SER</span>
-        <span class="hero-line">TRATADO COMO MOLEQUE</span>
-        <span class="hero-line"><em>FAZENDO UMA ÚNICA</em></span>
-        <span class="hero-line"><em>MUDANÇA NA SUA ROTINA.</em></span>
-      </h1>
-
-      <p class="hero__sub reveal">
-        <span style="display:block;">A arquitetura que <strong>transforma a imagem</strong></span>
-        <span style="display:block;"><strong>que você passa</strong> — do físico à postura —</strong></span>
-        <span style="display:block;">para que o respeito venha como</span>
-        <strong style="display:block;">consequência natural, sem forçar.</strong>
-      </p>
-
-      <div class="hero__video-section">
-        <div class="hero__video-glass">
-          <div class="hero__video-host" id="hero-video-host" aria-hidden="true"></div>
-
-          <button
-            type="button"
-            class="video-poster"
-            id="video-poster"
-            aria-label="Reproduzir vídeo de apresentação"
-          >
-            <img
-              src="https://i.ytimg.com/vi/2RSMdLowagc/maxresdefault.jpg"
-              alt="Capa do vídeo Arquitetura da Rotina"
-              loading="eager"
-              fetchpriority="high"
-              onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/2RSMdLowagc/hqdefault.jpg';"
-            >
-            <span class="video-poster__play" aria-hidden="true"></span>
-          </button>
-
-          <noscript>
-            <iframe
-              src="https://www.youtube.com/embed/2RSMdLowagc?controls=0&rel=0&modestbranding=1&playsinline=1"
-              title="Arquitetura da Rotina"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen>
-            </iframe>
-          </noscript>
-        </div>
-      </div>
-
-      <div class="hero__cta">
-        <a href="https://pay.hotmart.com/Y103675280S?checkoutMode=10" class="btn btn--primary btn--stacked" id="btn-hero-checkout">
-          <span class="btn__line-main">QUERO A ARQUITETURA AGORA</span>
-          <span class="btn__line-sub">DE <span class="btn__old-price">R$147</span> POR R$47</span>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="#top" aria-label="Hard Mode Lifestyle — início">
+          <img class="brand-logo" src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDkzMCAyODAiIHdpZHRoPSI5MzAiIGhlaWdodD0iMjgwIj4KCTxkZWZzPgoJCTxpbWFnZSAgd2lkdGg9IjEwODAiIGhlaWdodD0iMTA4MCIgaWQ9ImltZzEiIGhyZWY9ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFCRGdBQUFRNENBTUFBQURienB5OUFBQUFBWE5TUjBJQjJja3Nmd0FBQXNkUVRGUkYvLy8vLy8vLzQrUGp4TVRFcGFXbGlJaUlhR2hvVlZWVlNrcEtQejgvTkRRMEtTa3BHaG9hTGk0dU9UazVRa0pDVEV4TVdWbFpjM056a3BLU3NMQ3d6OC9QNysvdjJkblpqSXlNalkyTmpvNk9qNCtQa0pDUWtaR1JrNU9UbEpTVWxaV1ZscGFXbDVlWG1KaVltWm1abXBxYW01dWJuSnljbloyZG5wNmVuNStmb0tDZ29hR2hvcUtpbzZPanBLU2twcWFtcDZlbnFLaW9xYW1wcXFxcXE2dXJyS3lzcmEydHJxNnVyNit2c2JHeHNyS3lzN096dExTMHRiVzF0cmEydDdlM3VMaTR1Ym01dXJxNnU3dTd2THk4dmIyOXZyNit2Nysvd01EQXdjSEJ3c0xDdzhQRHhzYkc1dWJtek16TTJOalk0dUxpNmVucDF0Ylc0T0RnOHZMeTdPenM5dmIyNit2cjM5L2Y4UER3MGRIUit2cjYwOVBUZlgxOVVsSlNKaVltWVdGaHlzcksxTlRVM3Q3ZTZPam8ydHJhemMzTloyZG5kM2QzNU9Ua0xTMHRWbFpXYW1wcWZuNStmMzkvYTJ0clMwdExaV1ZsL1B6OE56YzNNVEV4VTFOVGJtNXV5OHZMYlcxdFZGUlVZbUppS3lzcldGaFlnb0tDNWVYbFJrWkdpb3FLVjFkWHlNaklSRVJFS0Nnb09EZzQrL3Y3MTlmWEhoNGVhV2xwTXpNei92Nys5ZlgxZVhsNUx5OHZnSUNBUER3ODNOemNTRWhJaFlXRlJVVkZabVptVVZGUkp5Y25JeU1qSlNVbFFVRkJ4Y1hGTURBd1FFQkFiR3hzY25KeTdlM3Q3dTd1K2ZuNWIyOXZIQndjVUZCUTB0TFNYRnhjL2YzOWUzdDc4Zkh4ZUhoNElpSWlOalkyOVBUMGdZR0JUVTFONGVIaElTRWhYbDVlT2pvNjkvZjNHeHNiZFhWMVhWMWRaR1JrVzF0YitQajRRME5ETWpJeU5UVTFXbHBhZW5wNkpDUWtjSEJ3eWNuSmRuWjJ4OGZIY1hGeDFkWFZQajQrSHg4ZjI5dmJUMDlQVGs1T2k0dUxnNE9EaDRlSGlZbUo1K2ZuWTJOamRIUjBob2FHUjBkSHpzN09PenM3UFQwOVNVbEpLaW9xME5EUWhJU0U4L1B6WUdCZzNkM2Q2dXJxZkh4OFgxOWZMQ3dzN2UzdDRPRGc4L1B6NGVIaDYrdnI1ZVhsNCtQajd1N3V3ZVBzL1FBQUFPMTBVazVUL3dEQS8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy93RC8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy9rUC8vMEdELzhBQXdBRUQvQVA4QS8vLy8vLy8vLy85dy8vLy8vN0QvLy8vLy8vLy8vd0QvLy8vLy8vLy8vLy8vLzZELy8vLy8vLy8vQVAvLy8vOEFBUC8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLzhnRUFELy8vLy8vd0QvQVAvLy93RC8vK0QvLy84QS8vLy8vLzhBLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vL2dQLy8vLy8vLy8vLy8vLy9BUC8vVVAvLy8vLy8vOFQvWkpBQk9qQ29sQUFBUmI5SlJFRlVlSnp0M1hlQUUyWGV3UEZuc1h1V1U3R2M5ZXlpMkR1S29vaUtvb0EwRVFSVVVMRFFMR0FCVDlCVlhGU3dndzFzWUFOUkVSVUxObFRzSGZYc3Z2WjJkeGF3NEx2SkpObVo1L2s5bWZrbDJaTGwrL21ESkpOa05rRHkzU1F6OHp3VkJnQ1VLdXI3QVFBb1A0UURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCR09BQ29FUTRBYW9RRGdCcmhBS0JHT0FDb0VRNEFhb1FEZ0JyaEFLQkdPQUNvRVE0QWFvUURnQnJoQUtCV3luQVFJYUFoKzZ0MHF5SWN3T0tDY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJGcXFnUk92OU5mVCtzV2xWZTRWZ2o4NzlqZnZsYjlqL0o1UDZ2VXVmZWJCNWUrdDVtdWV0TjVvN0JUV2VaZzByM1VPL05uanQwVWNsV21zOFNNNExURG44VXZvNzdncE9PdjZ2djJXVEppa1ZMM0puM0pnV3MxWmhuOTZoWXF1TDJmTGZvOW5NQnE4MVlZV3B3MnYxL2hhOWpwVnZkWlQwcTN0aTZva0wrNTFqVWJkWVdxOXd0WEZISTgyVDE2bWZ0ai9uLzJmdDlvVjl0WW10UHRCYVVWemoyZkxtRVA2TkUvdkh2N0xubG10VEpEK3c1SVRqdGYxUGg2K2gxVmZwa2lXVUx2SC92bTQrc3FMaHZzNVh1a0s3Yzl0L1Mwa1NXT0d5bFdSdXNmSmQ0M2E1dkZMeGEwM2Q4Y0xyVDI0V3ZvOTg0YTBIM2QvZjZQdjlydWJxelIxMCsrR0pyMmNsWEYvb1FCbFJVM0xodTZ3L2x2ZzYvck5EVkp0REVMaTdoS0ZhOWhlUDBTd3RmUjhzSDBpY0ZoeU9yL3pJM0x2aldYbGhFT0FLREt5b2VQSENVdmJTWWNKeHlUbkQ2cjZyQzEyR0ZZK3ZPRnlhN1grOHBRMFpHRmhRZWpvemhQOSsrNVgzdVVzSkJPUExKaHVQYzh3dGZ4enJ2cGsrMmViOEVqK2VNK2QrMlBDTzhvQ1JyTlV1dWVNTHBrUVhGaEdQRTE4R3YvVEZPanBJTGg2UHpjeWVkbzdqcjhTKzJQYlhtVWttZUo3MVhtTnZobE1nU3d1RmZGK0V3dVhCMGMzL25KRGZxNVBSSmFWN2l4b3l1T1Avcm1rdEZ2K1BJT20vVUFWTnFMaFVURGxNNUtIMXk2ZWt4dDh1akpod2Q5eDJtZmJLUG1YUllMcTVGditQSXV2Q2s4TGNsaE1PL0xzSmhjdUZvOTFnUjYraHpSZnFrWkM5eFk2cXVmU2w3dGxRNXFqWjI3dTlUcytlTENzZE9qNmRQcmo2NThGVmt3MUU1OXZ5aEJkejlrb3ArbVhNbGZKNzBtOXNoMXlQQzRWOFg0VEM1Y0d6OVFSSHJHTjgzZlZMQ2wzajFiL09iNWdSblNwaWphcGQ5bFBsNFVWUTRWdjAwOVdlSDJVV3NJaE9PcHIvOVdlQUtMcS9va3o0dDJUdU9sUDZQdkpJNVJ6ajg2eUljSmhlT2dkY1ZzNUlyZTZmK0xHazRqRG50cFJtMXNOYXhaNDdybFRvdEtoeFhINW42cyswVFJhd2lIWTZobDA0NnJ1QTFESmlmL25oWjR1Zkp4SW9qMHFlRXc3OHV3bUZ5NFpqU3Q1aVZERXQvMFYvaWw3Z1pjVm0zaTB1L1ZuUGVBNm1OUUVXRkkzaTcwT3lUSWxmUmNVVjVVM0ZDSXk2OStQRFNQMDlHYkZqUjFSQ09mT3NpSENZWGpoV0wydDFzUWZyOWRzbGY0cWJUZisrdWhiV2FTWGZmVWx3NEpuZE8vWG5TOVVXc29qb2NiWjhzOXZWeTJpdlRhK0Y1Y3VPREV3bEh2blVSRHBNTng3UWppMXJKelIxVGY5YkNTL3l2NXZOcVlhM21sdXZ1TFNvYzV0YjJwc2gzYWYzR2JYdHE0UjlUc3ZyL2VGMHRQRSttREgrTGNPUlpGK0V3MlhBMC9iV29sVXc5SlBWbmJiekV6VEZ6YW1PdDQ0L2R1YWh3dEVoOUwzcGZ0eUxXME8vT0g0cDVBRm5qNzU5Vkc4K1RrMW8rU1RnSVJ6NUJPSXJaZWJyYWJlMVNmOVpLT015U1JSeEU0emZpLzRyNW5HSFcvS0Q2SGYyQVl0WXdmbEF4OTY0eGVId0pYM1ExYnVteWRHMnNOb053bEZ3OWhXUEpaWXBiUzRkYlRLazNuTmF5TzdvVWMrODcyeHB6MklPbGVpeUNSUmR0TkgzUHA5cy92ay9GL0tWT2liOTU2UTIyajZVcEpjSlJjdlVVamlIMjRZcEs3VlBIZXRiT080NEdxZXI0V252Nk5EbmhyczM3TGQ4bXRLVDdMei9PSC9kanZlU2psaENPa3FzSlIzVEhuaG5ueXJlZnU1UjNWZHZLYnpiL2ZDbHk4YmYwVWVzclJYWkRHbkYvYkxTR2RZNWNiUDZjY2Q1eHJMeFozRXJNWDMvODl0dHZQM2RZWjhYTkQ0MjliZksxVnYrK2ZuT0QzeFo4TlBTdnRvY2tYZTNDUFdOdTBEUHkwZUwwczR4WjczdmRHbmE2S3ZaUlRGam5oR2FlTGJTVjc5MjA1Qkt4Sy9BK1Q2TCtXUGpTSnQ5TW03VFQxb25IZy9BOG1SSTdjbUQ0VXZEUk5vUndGTXYzamlPelY3ZmppYmJlVmQxK3NMaDQ2SVRJeGZRN2pxRnJqQTR2RzNOaS9nZFpiZC9uSWhkUC9aZHgzbkdNNjJlUzZ6THdoQ3QvUy9JeVY2M1ZUTjdrNkxPZW1aemdocnM5RW5NRGF4UEt2dmVhdVcwaVN4N2VQV1lOejdhT3VjRzlSKzB3UGU4Tm12NzV3TDR4Ni9BOVQyU1YrdzE1N3BsV1NXN3BlVElsMWl2U1E5NXhsRno5aEtOZmRGU1preTdJK3hpTmU0K1J3MHh4NFVpcHFtcDY0OTV4TjFLdnRmcDM5WW10WXZkU2lRM0hTeTBqRjF2TnRGNExwbTNjWUJveDRYaGt5SUJlTVdzd3B1KzZ6WHZudllFdUhNRTZYMm01WSt5R1ljSVJRamhNSmh6V3Y4UXFuK1Y5akNtelg0eThSeGsrd2hRZmpwVHpEM3cyLzRmNWd0WmErWEMvbUgwdVlzTmhmUTViOXgyemZPUnBkV09udUFlUk54eC9yWDFWbXp4WDE1angzVW41cmk0Z0hOVTZQSHZhaVB5M0lCd2hoTU5rd3JIcXdzaXk3WjdPK3hqVEhtNGZ2cFFlb2FJVTRhaiswSExtZi9KOThpNXdyYWJwZi8zZkJwa0U0UmcxSm5yeFpHc2dncnNPakhzRStjSXhmYzF0NCs2ZXMzL1hQRnR5Q3d1SE1XTXZHNTQzMklRamhIQ1lURGhPaTY2OVc0SjlIQVpkRzduNDJDNmxDb2N4cjFiayticWc0TFZXM1Rzb3owZUIySEIwZkNoeXNjOFZWa21DbldmejhZZGp3c0ErOW9DQStiejZ2ZjNkWXZoeEtWWVUwWGZRYm5tdUpSd2hoTU5rd2pING1zaXkySS9yMWY3eDM4akYxQWdWcFFxSHFicjFXTyt2djhMWGFycU04QWNwTmh6bXpNaU9EZVA3YnZkZTVPb05ZL2RFOVliai9uT1Z4K2RYYnRySGQxWGg0VENteFN2K0Z4M2hDQ0VjSmhPT095UGZ1RG4vclpMZFg0dGNUSTFRWVkwNVdzUkwzTnk2cG0vN2JERnJuWHJHVjc2cjRzTnhUblJRMEhZamRvMWMzdnYrdUJYNHdqRjJtejNpN21xYitzMXd6elhGaE1NY1BtSVgzMVdFSTRSd21DQWMxb2cwejJ5VC96R21IVEVqY25IV1hpVjh4MUd0MDB6UFRndEZyZFhzTU5Tei9TQStITmF4c1B0c0d0MW43c0RZSStROTRiaC85UzNqN2ludzdlcGJWRGpNcE9hK3JWcUVJNFJ3bUNBYyswZS9ERjJZNU9pUXpyTWlGMi9wNEd4NEtPNGwzcW10L0JWZ2NXczFMWTZYeXhFZmp1WWZSaTV1ZEVuazIrRkhING1Nc0N6eGhHT0hKK1B1S0JuNjJ3M2k4dUxDWVc1LzJUUFlQZUVJSVJ3bUNNY20wY2wzdG5neC8yTU1SUGRzVFkxUVVjcDNITVlNMjZPN3RMakl0ZHAvMTZ6NGNCdzhKM0x4c0dtUmk5a1pFL0tRdzlIMDQ5ZzdpcVkxNlNFdExqSWNwc3VvbmNUbGhDT0VjSmdnSE5aa1RDZEd0eGQ0OUlsT245VHJxaEtId3pNTWFyRnJyV29xN2hZYkg0NEJOMFl1dnJoajVPSmxSOGYrWkRFYzA3OC9QUGFPc21ONlNWdXRpdzJIT2V3QWNleGt3aEZDT0V3UURtc3lwbmEzNVgrTWdUZWlYdzYyZktEVTRSaTYvQ1hDMG1MWGFybytJQTBQSEIrT3FUL2syOUZoeFM5amY3QVVqb3NmS256d3dNMmwzZlNLRG9kbmhBWENFVUk0VEJDTzZHUk1GVC9GUE1iQUR1OUVMcTd6YnFuRFlZNXBLK3hlWGZSYTdWMjVBdkhoTUZlZW11Zks1cy9sdVRJZ2hXT0R0Mkx2NWpYMFd5RTZ4WWVqYWwxcEoxdkNFVUk0VERvYzFqNlFTLzJZL3lGbUhCV2RjM1RVeVNVUGh4a2g3QlpWL0ZyTkhPRWZKa0U0N3VpVDU4b2U4ZU1TQ09GNDVMSmJZdS9tOTZTd3Mycng0VENIRHhBK0F4R09FTUpoMHVHd0ptTTZKdGtzc3M2dWxLWGRxcEx5Nm52dVc0NFNoS1BidnU3SCtBVGhFRDhhWkNYNGVDZUVJOEg3bEh3ZWNJK1BLVUU0eENseENVY0k0VERwY0ZqZlFzYnZBeGs0UG5LNCt2aStwUStIdWVRc1oxRUoxaXJ0QkpFZ0hBYzg1Yjl1OEhueFA5VU54eExEWTdmaDV2WFd6czZpVW9TajQyRDNMUWZoQ0NFY0poME9hekttVmpQelA4UXNhMWZLSzN1WFBoeEh1Ny9IU3hHT3ZrYzZyNHdFNGVqMGdQKzZnUW1tN0hiRHNkSHI4ZmZLNjVaajdTV2xDSWY5dlhjSzRRZ2hIQ1lkRG11TW1sOFMvaThlR2QyVFlkaklrbi9IWWN3N085aExTckZXODlRQjlwSUU0YWpjekQ4VXhxUUVJNWc2NFpqeWZaLzRlK1ZsZlVGdFNoUU9JWkdFSTRSd21IUTRvcE14WGZ4T3dpTTF0NHp1dXJUZ3oxb0l4eGFmMmt0S0VnNTNpdTBFNFRBcisvZW8vY2UvdlZmbE9PRzR1cmpKYktwMWJtTi9XMU9TY0ppem5BM2hoQ09FY0poVU9LekptT2E0SDV4bEJ6MGV1WGh6eDFvSWh6WFFXSW5XYW9aZVl3OEpsaVFjcS96bXZXclhSK1B2N29RajM4K2NkdFVsTzF6ZTZ0TTN2N3g5MXQxNU5nUGYxTjlhVUpwd3VQdHlFSTRRd21GUzRiQW1ZM293YnREZExPdlF1S21ISlB1T28rdUdOZWY3dnJXd2E5NmZVYldqUFE1cGdyVWE4K2t2UytZZkdjRFpjSkFrSEJ0NWo2MDErODN3WHBWamgyUEVDOTdIT0hiaWFUVkg2bFROOE0vRHNMTzlINGp2ZVRMKzg5Q0Z0OWY4ZHVlOFg4dDIzM2EwdGNUelpPcVlaT2pvbFBXR2hTOHhXSEhKMVVNNHJGOHZTZDUxQnl0cUgvbUs4YloyeWQ1eHpOc25jckZKaDYvYTVQbVY2bndia1d5dHhweHk1RitiK2xkckhYaVNMQnl0bi9WZWRVNkN5UXZzY1BqM2w3RVBiNzkrb1c4SW9wRVhXUXVTUGsvK3FocDR4Mkcrbisvc1MreDlNbTMvcm44ZGVmQ09vK1RxSVJ6V3hza2tMNkhBM2RIRHJEcThYa2c0cWcwODJ2OFNkNTZaaWRkYS9YYi85dXZjaFptcmxyU09vRXZ5dHg3di9TMzlRclA0ZXp2aFdNczNEVTNQbGV4eDJaZTZ4ZmRKNGV5eDBjdUs1OG1BKzBkNmo1TloxNTZma25DRUVBNlRDc2NWcDBVV1ZDYWVtL0QxNkZoekhWOHJNQnhteW5qdnkvWlEreHBGT016ZzV4OFNscVk5WkkzMGx5UWNOMzV1djRIUFNqU0NpUjJPZmU2VGIzZjdjMWM3eTJhMjhxelUzZ3RXOVR3NTZrdmZoeVZucDFUQ0VVSTRUQ29jMW1STWE4Y1AwcDloZmViZmFrR2g0VENQanZMdE83TDZMOVlDVFRqTWlNZG5TWXVycldVOWRSTzl6N0ovdmVkY2tIZms4UXc3SEw2ZFRZVzlLS3FmRGQvS043WVBJZFk5VDZaUDl1enkzdG4rZHlNY0lZVERwTUx4dDhqbEJKTXhaVm1UTWoxeFZNSGhNRGR1dDdIbmg2eG9iZjlRaGNQY2MvZzM4bXBidkJxOW5DZ2NwL2syV1d6eXF1ZUtNQ3NjOTNybVZscjlYT200ZHQ5aCs5WVJROXJueVpyaTBBWFZsclVHWUNNY0lZU2pXczlGMFMyZTBqTzB4d0x4NE84MWZvNWNISGxMNGVFd2E3OG5MYTEyd3FUb1pWMDR2RlBFMkROR0p3cUhOWXRFRGQrbmpnZ3JITk9jbmRBQ3pvYVN0Q25IeUFXY2RFTDBzdko1OGxmN0tmTHRUN1FHR0NNY0lZU2pXcyszb25QSi92My8zTHNjODVtNFFYRDJWNUZoK0liZlVVUTRIdm5JODBXZC9WdGVHWTU3WnNxN3M4MzhJVHFFWUtKd3RIekpjMFdpblcydGNKdzdSTDZaczJ0R3dQY0FyNHB1ejlFK1QzenZsZXh2UndsSGlDNGNuYjZQdjQza0FjK3dzcks2RDhjZDBWK2oyODUxNzNMZ0ovS3dFZGEzSXpkSFIrWFV2Y1I5VTY5ZVpvM25yUXlIZHppenU2SmY1U1FLeC9tZUdaMG56MDJ5czYwVkR0K25oSlBkcjBaVFZ2RHNSSEo1WkFjSjlmUEVONCtVdlFzWTRRalJoZU5ZYVR5cUJPUzNuajUxSDQ2Vm8ydnVlTE43bDYxYXkwZmFXKzluVi81UDVLTHVKYjdlZkhHeE0wYW9OaHkralo3V3NEeUp3dEgxVUhtazR6OThIMkVpckhCNERxbDN2cGJNNkRsQlh2N0IxcEdMMnVmSi9SL0wzNFczZlNKNm1YQ0VFSTVxUFplTG40enBrclhFY1lQdFNabEdqWXhjMUwzRUx6OUtYT3hzTnRDR3czZEF5SmhSa1l2SjlsNjVicURxWjBSWjRmQWNoTnorWWZuZTU4cy8yaDVlU1AwOE9lSWFjZkV6KzBVdkU0NFF3bEd0WjV2NHlaaW1yQ2x2QWJBbVpYb20rbWxEOXhKL1hCNWQyemtBVkJ1T0pmOGpMN2ZHRWtnV0RxczJXUWttNlRaT09GNlI5M3A3ZW4vNTNnTThtNEt0amJmcTUwa0xlUmE1dnRhWHBvUWpoSEJVdXlzNmlwUzRLOU5kdmVSSklhMUptZWEwaWx6VXZjUjdYeWt1TnJ0WlkxWm93N0hvVjNtNXRTTkhzbkJZYjdHeXBPK0ZYRlk0empwZHZKVTF4MDFPYXY0SmlmWDNVRDlQUEhOaFdFYytFbzR3d2xHdEt2cFpYNXFNcWZwanQvelZwZlY1dkVsMGx3dmxTL3hNZVlkdWUwdUdOaHdUZXNyTDEvOHVjakZaT0t5M1dGbWVOdzhXS3h4dmJDamVhcDk1bnJ0ZkoyOTJXaS82bmIzNmVlSTVOS25TR3RLTWNJUVFqbXBqb3QvS1M3K0Fxai92ZXFZYmkyNEJlRFQ2Z1ViNUVsOWUzbEdoMWZQUnk5cHcrSUswNmVlUmk4bkNjYXY4d3owUDNXS0ZvODNkNHEzc3YyL09jZktXRyt2dm9YNmVyUGFKdlB6bTZQZkFoQ09FY0JqbmJZSzA5WEt2RjgzcUg0bnJzaVpsaWxLK3hOLzhwN2k0NkhCNC9obXNHUjJUaFVQZTVERmVtay9BWllWajdyYmlyYlRoc0laVFVqOVBwUDEyVXF6OVE1S0Y0L0l6UFQvRjhqZDdkei9DNFdyZzRhaUkvcDlKQjFCcytMVzVVLzR4NG1FVldjcVhlUGRyeGNXMUZZN3Rvcy9kaE1jRTM5ZE5XSmh3UGdrckhBbi92am1lY0d6MVVlUml5Y0p4OFlqSXhXVGgrTlVlSHlrcHd1RnE0T0dJZnI0UUoyT2ExZGxNRkNjcUZjYThER25ZNGJDZThnbkQ4YUEwaHNWYkd5UzZiM21GNDlyb1FkS0VJNFJ3T01SZm5sZWVhc2IrSkE2Mll4OWlGZEVZdy9IS0hzTENkZlBsc3diaDhDTWNycklLaHpRWlU5WFoxZjkrKzArWGJ0N1JPOTZGYVp6aEVQOHpQYnRDMkFpSEgrRndsVlU0cE1tWTBuWG9lb043aGJFblpZcHFqT0VRcGtCS1BQUVI0ZkFqSEs2eUNvZTBIL1N3eTZ2L2FQYUNlSHRyVXFhSXhoaU95Y2U3eXlhczJTYTZZS3E4eHdYaDhDTWNycklLaDNSOGVQb3Y0RGs0MDVxVUthSXhoc1A2WDBtN3hKNU9yYS84TnlFY2ZvVERWVTdoRUNkaldqTzFwV1hrTVBjSzQreEZFRkgyNFpnbWJFSzUxMzAzY2FFMWxvNTVzcVg0RXdtSEgrRndsVk00eE1tWTBnZlBEeDhoWE9OTXloUlI5dUVZOEtNN1BOYS8zZDIybnQ3T1dyQ0RQTjRQNGZBakhLNXlDb2M0R1ZONnFKZ1JyNHZEMm5iSXMwR2hOT0hZeTlvSHZpN0RNZFE5QmtYWXgzcHp1eE5MeWxORkVnNC93dUVxcDNCSVJ6eFZ0azd2SW5iSVZIRmw3WjE1MzNOS0U0NWRyZTA4ZFJtT0Y5MER6b1E5Vng2d1A1bGNZWDkyQ1JBT1A4TGhLcWR3U0MrZnpOVGxlOGtqVStXWmlMazA0VmhpMmFMV1dsUTQxdnlYczB6WWM4Vis0SlVMenhGLzRtSVFqclUzOS95VWpHWEVRYThONFpBVUdvN29rYWQxRTQ3SGRuR1haYjdHa1Bid01Ia25ZaTVOT0Rhem50aDFHWTRPd2tEa0s5alA4YkdyV04rWGRwb3RqOXF4R0lRanpuUE5QVmNRRGxjWnZlTVFKMlBLak4xM2MwZjNLcE0rQU02bk5PR3dweVNveTNEY0xBeUg5dmZmclFYT0Y4b0hQVVU0UEFpSFFobUZROXgwTWowWUNjY3pITFozM0psU2hjT2EyYlpPdzNHak1QQ1pOZVJnZFErMnRoWTAvNFJ3ZUJBT2hUSUtoemhkV0diUGhmNzJ2T2dCYTFLbXNOS014ekhMR2pLdlRzTWhETzFsRDU1c210cTdza3p2VFRnOENJZENHWVZEZkJKbDUyQ1VoeDIxSm1VS1U3N0VENVhuRk90bGZaOVdwK0hZK2xsbjRUV0RyUVhPNEdnUGRDVWNIb1JEb1l6Q0lRMjYrMzUyOU9JRDVMM0xvNU15aFpWbXpORXp4eFcxMXVMQzhjU096c0pESHJVV2RMdmVXbkRYVVlURGczQW9sRkU0cE1tWWNyT1g3U1R2SkdwUE1scEQ5eEwzakw5bno0MWF0K0VRL3Mrbi9oQWRVODk1SjlaNTFoS0V3NE53S0pSUk9LUlBJN2tuc21mS1FzK01BVWI3RXU5MG83ajRQWHQvN2pvTngyM3QzS1duUnVkeHVMR1RkZjB6K3hFT0g4S2hVRDdoRUNkajJpaDdXS3k0TzdwM3hnQ2pmWWxQNmlJdWRwNlpkUm9PS2FWem91dTcxcDdrcnVWTGhNT0hjQ2lVVHpqRXlaaWV5dTRFNVhsTFlFM0tGS0o3aVR0SGZBVHN5ZXJyT0J6WEhPRXMzZUxUeUVWbjB2a052aVVjUG9SRG9YekNJVTNHVlBQTy9LOXp4R0ZIZlpNa2ExL2lubU5oRnRoRGpOVnRPSmI5emxsNllIUXJpck5IN1NxL0VRNGZ3cUZRUHVFUVp3TjhkL3ZzT1huWVVXdlgrQkRWUzd4S0dGckxTRE1nMVcwNFZ2elNXVG9qK2liRU9ZYm4rVmFFdzRkd0tKUlBPS1RKbUQ3YUtuZTI5VDNpdmJ5VE1xbGU0dHMvSmQ1NFkrZUZXN2ZoY0FicGNRNElQdERhejJUcUQ2Y1FEaC9Db1ZBKzRaQW1ZenEyWmhpT3JlUzl5NzJUTW1sZTRzZi9LYjRzcHY3WC9nYWhqc054bnIyN1Y3Vzd3M1BNUFBxSXRmdkpxeTBNNGZBaEhBcGxFdzV4TXFaZDNzeWRGZDYycDNnblpWSzh4QWQ4S0I5dmZmQ2NZdFlhS0NvYzVyV05uY1dSbmVESG5HaGRPMnJNNGhTT2VmSW56Snp2b3NkQUVnNkZRc054VitSSVZkOFRvbzFuenVCcXZlVmRNYjNoRUNkaldxdG1FMjNmOGVMZHZKTXlKWCtKRDcvTWM0enRVa3NYc2RhTTRzSWg3Qk8zeVJlaEM4NC9TblZIRjZOd3hMRytFQ0ljQ3JYN2prUFBHdzVwTWlaei9VbTVzNmZJNDlONEoyVksraElmOFdaSGFXTEZhalArNXg0SVU4ZmhFUGJDMysrWjBBWG5iZGlTeXhDT0dvUmpNUWlIT0ZUUDJXTnpaNTJQOHhtK1NabVN2Y1R2T2FEZDNaNEhKTzdPWHNmaEVENmZmUmgrOWp0Zi9BeVpTRGhxRUk3RklCelNaRXlWelVNN1J0b2JFREo4a3pKNVh1S3YvaWQ3cnNuZk9xeTl3WTdpM2lGcCt6K2RmSzIxRlk3ZjdIRjdqT2t4TURSUGQ0K0oxclhMTGtFNGFoQ094U0FjYllUZi9KSC9lS2tzMVQ3ZVVsNmY1eVdlV05laHJZV2xkUnlPUHhlNHl5ODl2ZWE4UFlwSWFwZ0J3cEZET0JwL09PNmZJVHd6STVzMU5ucGR2R016ei9lenhZYkRHV3NyMzFwckt4em1KdmY3bDV2NjU4Nit2Sm53T0FoSER1Rm8vT0Y0ZkNkaFlXUzhxNkdqeFR1MmZVSmVZWkhoMlB3enpWcHJMUndQNys0c1g3OW1QL1RqcTZ6clV0K2NFbzRjd3RGUVJ6blg4NFhqVHVtcDlWSjR6cERYTnhMdk9NTTlFQ3l0dUhENFhrQjFIUTVoczhyZU5STndIMm52YjU4YWxKMXc1QkNPeHYrT1k2MzNoWVdSL2NuRncrNzlreklWRlk3V0l6MHpQZFYxT0ZiKzNGbmUvdUhjV1djR3E5UkI5NFFqaDNBMC9uQ0k4N1d2R0ptYVM5aU5Nc1V6S1ZNUjRhaTYwanZyUWwySDQ2akxuZVdoY1ZaM2VjeTZMcldKaVhEa0VJN0dIdzVwTXFheFowY3Vublc2ZXhQam5aU3A4SEM4UDhIL3Q2M3JjRng2akh0RnpUaXJ6ci9JeFNNSVJ3amhhUFRoR0xGakczZGhic0RSZ1BQN05lQ1psS25RY0V3ZDM4SjNwTDUvcmJVV0RuUE9LYzRWZzNLdmVmdks5QkNwaENPSGNEVDZjSWlUTVZuVExZbGZnM2duWlNvd0hMZis2TjhsekwvVzJndUhNTHI3MnRsOTJKd3hTWnYrYWdoSENPRm85T0VRSjJPS0hNOGxiRU1JZUNabEtqQWM3N2UvUTlvd0hMUFcyZ3VITUZKSWkxY3pad1pWV3Rlc2x0cGZqSERrRUk1R0h3N3hDWFJIbjhqRmdlZUxkL1ZNeWxUd2R4eXpqNSs1dmZmS09nK0g4QTl6ZEhiZ2tsYzNzYTVKdnhjaEhEbUVvOUh2eHlGTnhtUk9qeDR3Ty9nOGVaWHlwRXhGYkZVNTVBaDVsaFgvV21zdkhNSm9BcmxKcWhiWWYvSGhseG5DRVVJNEd2MDdEbWt5Sm1jYU5XbU1NT09ibEttWS9UaUczdjZENTVvNkQ0ZVVnYmQzOGp5WU4zZngzTU1RRGtNNFZNb2tITkprVEYzdXR4WThMeC9QSmsvS1ZOeWVvN3NNbENlbHJmTndUTGpISGFsb1NPYVlXUHU0d09CZ1lzS1JRemdhZXpqRXZVTGYydGxhMFB3NWNaWHlwRXhGSHF1eTQzeHhjWjJIUTlwNzVjVzkwaWVUNTFvdjV1QjFRamh5Q0VkakQ0YzRHZE51OXVHd0szMGgzTW8zS1ZPeFI4Zm1Obm9tV1dzdGhrUFlySklaaWZXUGhkYnk0R0Jpd3BGRE9CcDdPTVRKbUp5WDdra1hpS3VVSjJVcU5oeEREK3lZZksyMUdJNVYzTU4wMDd0ckdIT0NQWVJSY0REeFloU095ZTZSUEJHUFJjZGllc3EzdFl4d3VHcDNxOG9rK2NORHlrYnlqbFJ5T01USm1KejVGODhmS1A4b2NWS21Zc05oT25Ydm5YaXR0UmdPb1piZGd5bG1uS1JNNzVuNmN6RUtCOU1qeEd1WTd6aEtOVDJDTkJsVFpLaXJ0Q2x2eU1PT2lwTXlGUjBPOGNOSzNZZGp4bjd1VmNFUTlOczhZeTIrOS9EVW40VERoM0FvbEVjNHBBMnRRMXZaTTdHTHd3c2F6NlJNeFlkajlWSHVjU0oxSDQ0SmE3cEg4WHl3ZGVyUFZ6YTFGZ2Z2dkFpSEQrRlFLSXR3aUpNeGRaanRMUHAxa1hBN3o2Uk14WWZEdkx4bjByWFdZamlrelNwQkthKzBQa3BsdnVzaEhENkVRNkVzd2pIa1hHRmhrK1djUlJ1TEcxN05rd2NLQ3owdjhROC96Sno1NWVXTEtwcGVmL1V0NHEwQ1I3dnZnK29oSER1Nll5T21Temw2cUxYMG1lQkREZUh3SVJ3S1pSR09veThURmk2eHJMUElPVGdqSUU3S2xPd2wvdkpOYjhtekxxUlVyZXA4RzFzUDRWajFVK2VxOVBSMVRtMzNDcjVoSmh3K2hFT2hMTUx4enplRmhaY05keFk1aDRObTJQdW1weVI5aVUvcGY2TDhsYXVSOWttdGgzQTRXMTJONlhaZjlSOXZiV0F0L2VjMzZSUEM0VU00Rk1vaUhPS1VLV2U0aDNjNUExQmtuRERKWFpiOEpYN3RNcDQ1SUxOdi9ndGFhMGJ4NFhBbWxqYkJTRi9yMnQvc3ZMNWIrb1J3K0JBT2hiSUloN2kxNUcxaFhBeGhQS3dVYVZJbXhVdjg5Y3ZsVjRXcDJ1SFF3dGNhS0Q0YzB1Qm9EM1UwcG9YOTVmSHpyZEluaE1PSGNDaVVRempFeVppNlN1OUM5aFAzTGhjblpkSzh4SjNSd3JPY0EyL3JJUnptYis3WWlKZWM1WTdTV3JWQ1VGWEM0VU00Rk1vaEhPSmtUS0ZaQUdycytxaTRVbWxTSnMxTGZHemJmNG8zdHNjZ3E1OXc3RHpIdVc2Yjk5MzlPL3BPQ1U0Smh3L2hVQ2lIY0lpVE1iVitOdS9qaTVBbVpWSzl4RmZ6ekNNNXl0Nmp0VDdDSVR5NGRvKzU0NTluTjBvVERoL0NvVkFPNFJCSElkNVVPb0JwMU1ueVNvVkptVlF2OFNZajVTTnJuT1BuNmlNY1Z4L3BYUGRxQy9jSmtkME5qbkQ0RUE2RmNnaUhPQm5UUlNPRmhiL0xjNmhJa3pMcFh1TENZT0pwSzFyN3F0WkhPRTQ1eDdtdTZ1d0s1NERpVi9ZSVRnbUhEK0ZRS0lkd1NKTXhpWnRZVGU4cjVSOG1UTXFrZTRrNzJ6WXp6ckYyb3FpUGNJeFl1NWR6NWRKTGJmNlN0ZWlLMDRMVHhUY2NsNS9wK1NrWjI5bER5bVVSRGxlaDRiZ3I4bVN0MVhDSWt6R1pGY1QvelN2NmlHc1ZKbVhTdmNSbnR4QVhaL2VOS0hDdHBpVGhrTUw2OFpiRDdIZGsxMlYyYzExOHcrRTVsQ2tlNFhDVndUc09jVEttOUtSa3J1VytGUmNMa3pMcFh1TFNYbFlwOXI2ajlSSU9ZUXE3WnAvTTNUYTZKRGRMQk9GUUl4eXVNZ2lIT0JsVFIzbCt0aFBsK1dPRlNabDBML0VwYytRWGhuM2diYjJFWS9XUG5Dc1Bhci95NFo2SFFEalVDSWVyRE1MaGUvSW9DSk15S1YvaSswOFhGKzlyRFhGV0wrR1l0WmR6WlllejdIMWYybVJucGlFY2FvVERWUWJoRUNkalVuSW5aVksreEkrNFJseHM3MXBXTCtFUWhrd2N1bzY5WVhyejdFQ0NoRU9OY0xqS0lCemlaRXhLN3FSTXlwZDQ2M3ZFeGZaUUgvVVNqa2N2ZFVjTjJkZmVoL2EyN0FjK3dxRkdPRnhsRUE1cE1pYXRvZytBMytjK2NmRjcyeFcxMXRLRXcxUU9jcTZkWmgvUm05dHdURGpVQ0llcjRZZERuSXhKeTUyVVNma1MzMXZleG4rK05WcE8vWVJEM0VQT2NuRjIyeFRoVUNNY3JvWWZEbkV5SmkxM1VpYmxTM3dQYVJReFl3Ni90NmkxbGlnY2Ezem9YbTJwMlh4Tk9OUUloNnZoaDhNN1RZN0c3VWZaUzBvVER2dnd1Zm9KeCtYTzM4NlJtYVRKRUk0Q0VBNVh3dytIcys5MFFlNnlkOHR1VE9GNGFYUGY2bk5XVzVBOVJ6alVDSWVyNFllanE3TkJwQkRCVkNNaGpTa2NqejdpSFJZMWE1MGZzK2NJaHhyaGNEWDhjTHo1ejBRUExZWXp0SEZqQ29kNVkwUGYrck5xNXNza0hHcUV3OVhndytFNzRGWEpPY0s2WVlkam0rZ1FKSEhoaU4rc1VqTmZacU1JaHpWdVBlRUlJUnhwNG1STWVzNmtUQTBrSEZlNWg4U25iQjZkTURvdUhPSlFSMkdoK1RLVGhhUFhWZUt0dE9Hdy9oN3E1OGt5Mzh2TDc0bE8vMW1hOFRpeW5NSHlDWWVyd1lkRG5JeEp6NW1VcVlHRTQ3ckR4Y1hXT0FCeDRWajZCOS82TTBMelpTWUx4eUZUeFZ0cHc1R1p5eVZML1R6eEZORitscFEySE02ZVE0VEQxZURESVU3R1ZBQjdVcWFHRVk2WE41T1gxM3lYbVJZWGpuN0NqRk1SQjgvSm5VMFdEczk0OGZzOUk2Ly9VV2xlNzJwci95ZHlVZjA4MmVoMWNmSE1ydEhMaENPRWNLU0prekVWd0I0eHJHR0VZNFl6cFZQQW1zODZMaHhUM29qWnJMTDFCN216eWNKeGpUQytzNGtFS01JWHdDV1hpVnhVUDA5MmVGSmNQUG40NkdYQ0VVSTQwc1RKbUFwZ1Q4clVNTUl4N1FCNStkem9vR2R4NFRDSFgrZjVBUmtqYWo1SkpBdkhBeTNGVy9XVVJ4Y3dseHdyTHg4WWZWenE1OGtybTRxTHgxdWRKQndoaENORm5JeXBFUGFrVEEwakhNNlF3aG1QUmIrZml3MkhNMjJiNWQ2YXIxS1NoY1B6cXo0N09ZdnRQczlmY0ttbEl4ZlZ6NU5ENVo5blQwdEJPRUlJUjRvNEdWTWhpaHc1bzViQ0lZejZselp4U09SaWJEaThjODFsaEVaalR4YU85ZDhXYnpYMUIzbVN6V011bFgvdUMzdEhMbXFmSi9PMmtwZmJydzNDRVVJNFVzVEptQXBSNUV1OGRzSXhaWXI4RzNYcVA2SVR3Y1NHSSthZjZmM1FnWUxKd3ZIMGR1S3R6SlMrNHVJdFhwUnYva2gwY2wzdDgyVEZMK1hsMWxaZXdoRkdPRkxFN1hHemYvR3UxcGdmK3NncmJ0RTdjcmxCaE9PRUMrWGxIYXhQSHJIaHVLV0R2S0tNd3g2c09aOHNITUlzVDJuVzl0VXN6NjZyczYySHBYMmVuQ1VQSWV0TXFrTTRRZ2hIaXJoUHBEM1NaNFE0dHJGeEptVnFDT0dZOE9qMThrODc0S25vNWRod1RINDM3MmFWdlVKdkNKS0ZRNWpsS2EzZnJkTFNQeGJLdDdhSEsxRStUMFlPazI5dW5tOFZ2VXc0UWdoSGlqZ1prelBYYzVqdmM3RTFLVk5EQ0lmdnExSG5MeGdiRG5QZ1haNVZwWVgzSjBzV2pnbjMzQzZ2Nm9GT3dzSXRQZnVGMmVNbjZaNG5GVDk3WHJHVmUxaFRlaEtPRU1KaGZKTXhpZE0vWnZuMmFiQjJ4bXdBNFZqNlZOL2JCUHZmTFQ0YytUZXJ6T3BjY3o1Wk9Md2p2ZlpzUHRwWjlrZG5kOURUdE95MGsxbXE1OG5vK1JQbFc3di9uSVFqaEhBWXoyUk1adW1sdkt1dGRtdDdjYkUxS1ZPOWgyUEtxWDNsbWF5Tm1mcUNkYVJJZkRqV2ZzK3pyclJiUXJ0WkpBeEhzeGM4NjlyTU9lN3M1U3A1Q0hqM3ExVE44MlRPZWQ0OWVMYTF0eUVSamhEQ1lYeGZXQncvMmJ0YTQ5M1gxSnFVcVo3RDBYdm96OXRLdDB5enZ4cElFSTRIOTNSdmtWTzFRbWdqYXNKdytDYTlOR2JyYS9lTlhEN3ZDYytNM0diYWt0RmowUlRQazA2ZmJ1L2ZnV2VRZmVndTRRZ2hITVp6V0xWbitzZXNqWjJCaWRPc1NabnFOQndkMXd0ZjJ2U2lWYmIvZTc3OTJyYjgyRm9RSDQ2OCs3dEVkdHRLR0k2S1k3MlA4S2oyUFdvdVRGanRxejYrRzlyN3puaWZKenRFc25mNzM5YzUwcnZPYXBVLzI0Zm1lSjVNUjYyWVp5MWg3U05ialRrNk5vRUdIZzV4TXFhYThUTkZUKzRnTDQ5T3lsU240VkE2eS83UGpBOUgzajFzandwLzBaa3dITDY5dlZPbVhuZkVtOEdIcWZPSHZwZG5ES0UzN0VQZmZNOFRuWGJPWG5PZUoxTml2U0pmTGZPT0k0RUdIZzd4V0t1YThUTkZYU2JKeThlTUNsOXF3T0d3VjVva0hIazNxK3c0UDNRaGFUaDhPMThGcG5idjhjUHdzUjM3NUx2TjBINzIyNkRTaEtQL1RmWVN3aEZDT0l4bk1pYnJtSE9iODA0elk2M0k4NkVCaDJPRGIrMGxDY0t4NTRQdVRiSWlHemVTaHVQZVoyTUhNbzF4eldCN1NVbkNNZTByWjdkM3doRkNPSHlUTVowVzgvUTdSejZlSXZwR3BUVGhzSGZ4TEVVNEtwYy8wMTZVSUJ6cjVQa2k4TGp3cHRXazRjaWJva1RtT3B2U1N4S09uZHpEYUFoSENPRXdabENsZEp0M1BGOWlaSGwyVkk1TzE2Z01oMmMvaVlybG81ZExFWTVkMzNBV0pRakhrVmY3MXhnNVpDNXhPSHE2czNHcWRPdlMyMTVVaW5CVXJ1bk9zVTA0UWdpSFp6SW0rNmdUeDY3MmhNdVpueGladGtnWmp0MGZGaGNmWXYyb0VvU2pzdWtRWjFtQ2NFenM0ZDRrSTdvOUtYRTRURGZQRHZFSldZUDRwSlFpSE5JM1hJUWpwR0dINCtUSUw3amFDb2M0R1pQOVc5N2hPOFk4TWltVE1oeWU0OSs3V1hOUmx5QWN3anZ4Sk9HNCtCM3ZacFhvc0RmSncxSG9jeXJROThpRG5HVWxDTWZzRDkydWxqZ2NiSTVOb0dHLzR4QW5ZM0svYzdOTTZpSXZqMHpLcEF6SGp2WXVDWUhPczZLWGl3OUh0MTJGbldVVGhDUFBVR2x0SXR1MGs0ZkR0TDdIdDhvRUxqbkxYVmFDY0lqZmpQT09JNFJ3ZUNaanNuWTRQdlkyOCtkUGtTVy9SdzlueTRsTXlxUU1oN2hEU2ZYbml2T2lsNHNQaC91Tm9ra1dqcFlQK0ZZWkhiMUNFWTU1bjBzUEpwbGo5enJPWFZoOE9OYTRkMTloS2VFSUlSeWV5WmlzM1lwU2U1aEh4NHZ4emVFVTJRTlpHUTdmb1JzVGhrWXVGaDJPRnE5S1M1T0VZOTEzZk91TURyZXFDSWQzUHFSNHM1KzlRRmhhZERqR2poWVBLQ1ljSVlURE14blRhN3RITHFhbURyS09lanZvRG5IZGtVbVpsT0h3ak5OdmZkZFRkRGh1WGNmOVlzQWtDOGVvazMwcmplNklxZ25Ib3djN3U1UWs1RXk1bVZac09LcStrVmRBT0VJSWgyY3lwbkdSM1J3dTZsLzl4MVBSd2NLWGs1L3VrVW1abE9Id2ZlRnFEYXBaWkRnT21TUFBVcGdrSEZYSHU3Y0pSQ2RhMVlURExPb2p6K2dXSjdLdmFvMWl3N0d1WitJcHdoRkNPT1RKbUt6SmVNNVBiZFczQnJSYjlqdjVaNFluWlZLRzQ5Ui95Y3VIUk1lTUtDNGNNOVlVWDczSnd1SGRyR0pOUXFJS2gvbmpFR25mM1RpakRwQytpU2c2SEw1dUVJNHd3aUVmSUc4TlhuZlU1Y2FabWREMzBUdzhLWk15SEw3UmdGK0t6ajlTVkRqbXRmYk5pcHdrSE43Tkt0RWQzNVRoTUVQbTY4dHgxT25TL2plbXlIQk03ZW51R0pKQk9FSUloL3hTYVAxczVHTDZyWUExMW9adkRPRHd0NFRLY0N6bE9UNG1ORVZhbnJVbTB1SVY3N01xVVRqMnZsKytzelYrbnpJYzV2RTMrdmdlbGtmYkRrTTkxeFFUam00YmovZGV4MzRjSVlSRFBsVGNHb0VxdmJuRE9qVHVwYzNsbnhtZWxFa1pqdDRieXNOMXZiVno1R0xoNGVqYzFEbm1zMGFpY0hpbVFySDNmTkNHd3d4L1FaNUgxbWY3YzdyN3Jpb2lIQWNmM2N0L0plODRRZ2lIUERqTmJkRkJ3WUtkbE9idkdGNDJlYTc4Y1Q4OHNJeDI2aVRQWWVzei80eThTZ29OUitVZHJmTjlDNWtvSEROYnlYZTJqZ2xVaDhQY1AxanhWTHo5aFR4eEtEZ2N4OXk0ZEw2ckNVY0k0WkMvVnpnbitqbmt0WTFUZjM3U0xMTFE4M0UvZkJDOE5oeGJ6Wk9YaHlaWDlLODF4c3hSQjQ3TmU0TkU0VGkrU3I2emRVeWdQaHpHOVB3Mjd5RHFJYTBQY1E3dERTa3dITzNYN3lsLzJacEZPRUlJaHpnWms3azRza3YyK0dBNDNPazlJN2Z4dkg3RGg4ZHB3K0g3M21Tcmp4TDg0SHlxL3RoLzc3aG5acUp3akYzbGNQZFc3akdCaFlURFRIbHB5Njc1cnM5NDVuOGQ4MTVmU0RnNmZ6bmFNOEJLRGNJUlFqakV5Wmlzall1Wlg3UE5QNHdzM1VUYy96SXlLWk0ySEdNM2tYZS9IcmxaZU5kcWJUZzYvcnpyT04rbWxKQkU0VWp2Q3VleWh3d3BLQnpWTDU0eDdmSU1FcGd5OUswZC9GOWZCclRodVBIdTkyWjhrLy9OUmhyaENDRWM0bVJNMXNiRnpNZVpKc3RGbGw1d2t2eERRNU15YWNQaDNXZ1IrYXlTTEJ3OUZsWTBhenZ5bTYrK2ZmQ1FKRGRQR2c1NWVIZnJuNmJRY0ZSN3ZmTU85dkRpT1ZQdnU3L0tIU2ZEbGl3Y1F6OWJZc0dxZllaOWMrQnVLM3EvWm8waUhDSGxGSTc2czFxd29jUjlGYUUySEg5THM4MmM5elU5ZnYyazJkMEozamVWQzhLUlFMbUhZNGNuZzlPcnZVZHFvTVJHZjdQbCszY3V0OHd5eS82NWNPSEMvMVI5dnQvck1RTXIxWUpIRTN4K0tSamhTS0RjdzdGZlpoK0R1T0VFeTB5VmI1SzNPdEs1a0IzTkphZWZYNklWUmZSdTJUZitSZ1VqSEFtVWV6aXV5dXdXRkozN29OdzllTEk3N21pZGV1blNTYVZZellReC82Nk41OG40TStUREgwdUVjQ1JRNXVGNElidi94cjg4T3pHVW95a252eWNNV0Z5bit1Mnc1OWJ4dDRvell2cHp0ZkU4K1dQWXFPR0VnM0FVNDlyczErN1NTSjFscXNsRHUwc2puZGVwZnVPR1hqcEpHTUpMWmNEOCsycmplWExNV21jWXd1RmZGK0ZJSVBlVzlWQnBuNCt5Tk9qZE84VXBFdXBVdjNIRzdIL2RGa1d0WStLZDAydmhlVEwvNk5SK0tZVER2eTdDa2NCNjJRRmpKbnVIc1NrdkwvWjlLblhTRU1KaEJqU1RKNmhKSnZYR29PVFBreEhiVHJvdGRVbzQvT3NpSEFuVWpOQzdmQ24vUytyTFg2dVBEcjdzYlJEaE1EMmVHaTVQaWhkdmlWbkJ0Sk9sZlo0TVBEUXpiQ1RoOEsrTGNDUndhL3ZzdVZNOUl4U1hrZk11dlNCN1FFakRDSWN4STcrNk9mOE5aV012T0M0emwwc0pueWNqUHV1ZW13T1hjUGpYUlRqaWphZ1pFbmNWejV3SVplTytjL3JYN0x6ZVVNSmh6SUVINWp2Y1ZmWmI3OXl1NlNWN25venYzeWUwdnp2aDhLK0xjTVFiYzJMdTdIcmYxK1BqS05vakhhOXVINzdjY01KaEtpODZXdlZtN3FKbHZneDlOVkthNThua3AxOVkvNWJ3QXNMaFh4ZmhpSGZoQ2JtenVuK3VCdVhQaC85cWFTMXFRT0dvZG5UTGhVbjM2TDl4MExsOXdwZFB6ak1YZGtKanZ4N1ZkWXExakhENDEwVTQ0aTJzT1V6K2ZIRU9sZ2J1cjF2WDZMMzUrSTNkS3hwV09JenAvRVgvYjRTcEtTMHozbjV3TTJ2c3RlTEM4Y0xINng3WGRaQndCZUh3cjZ0aGgyT01NR2Q0Y1JZY0pTemNNZiszK2svVTdMMHhXNTZqc2NacSt3c0xGOTBXKzdnS1dHdDFWL05OOVA3N1p5dmMwbTdZUVQ5WGpPM2p1MG1UczR0OFhFWGFVcGgrZDlURW15YjVEMkhwdjhUTUxZUmh3Z3A1bm13MmI2bWRseHpRZEoxMXIvUGVaRldwSnFXeTN0SFdBc0xoS2pRY1dDd051N05GOHg4MytTSjg1TnI0M1YvN1kvY3VHeVVkVzdBY0VRNFg0VUFCT2xTZTlOMzN5Nno2L05NWFRxL3ZoMUlIQ0llTGNBQXhDSWVMY0FBeENJZUxjQUF4Q0llTGNBQXhDSWVMY0FBeENJZUxjQUF4Q0llclBNTXg3OHovL2ZUZkpwL3VQcmZUSGZYOVVORDRFUTVYb2VIb0k3NWk5M3d3YzZicHI0VTluUHpPSFZMOVI5ZlB6MzI2TXJlb3lSRVB0enJpVVBXYWhnUTdxQS8wNzV1WVVaVWJJR2lqcitKWHUvTWM5U05CdzBjNFhPVVdqbUZyL09vTXVEOWl0SDVWejI5Wi9VZkhIckV6Z2hBT0VBNUJlWVhqaWVNNmxXaFZwNlVPQmprcDN4RWxBY0lCd2lFb3EzQzhQblp5eWRhMXozMm00MFB4TnlNY0lCeUNzZ3BIS1ZVWDRlTXRFOTBzZzNBc3RnaUhhN0VOaHhuMzZUWUo1andsSENBY2dqSU54L0J2Ty81OXA0Yy8rT21YQXI0WHphamE4dUFrdDhxRlkrTXY0MjlOT0JvbHd1RXFNaHd0ZWdRWHZ3cW1iclhETVdTVDRPTGJsOWVzNDgwNXdvcW5aaWFkejkwamF1eUhvUXNUbnZ4d3RleFFjbDNQMjdmVE5abnpiVHI0SC9pMUw1dHJXejRjbkYrNVorU3F1ekpCMk8rakE0U0g3THpqV1BFQ2FmMUw5RStmRUk1R2lYQzRpZ3pIaVdPQ2kwKzBUWi9ZNGJqcndPRGl2SDFxMW5HY05iaGMrUFkxOTRnS2o2UTNmWUkxWmt5blp5OU5UMGJ5bWpBRVg5WkJqeHZUWTJKd3Z1UGdnOEpYUFovNXBtTkdSWGZoSVR2aFdDUGNzSnorTjZWUENFZWpSRGhjWlJlT05jNC8zTGw2OW9OWG1maHdETW1PU3ZyeW5xRnJ1a3pLbkpuYlJuckloQU9FUTFCdTRXajZzWEIxMnlkU2Y4YUZ3K3lSMmZ6YThjQ2hOZGNzOTIxdzJuTjY5QUVRRG1RUkRsZVpoZVAxamFTcnJ6Z3Q5V2RzT003L0tQT2psMXdtZDBYdTMrMkJUdEVIUURpUTFaakRzZnBIaGYzd3ByOW8vaXBydlo4OVZ6L2htUEQ0TmNLMUhUb2ZsenFKRFlmWit0bmcwa2NQNXQ1eVhITkUrQWJ1UXlZY2FNVGhPUDdkR1lYKzlNNFhKZGdOS3F1RTd6Z3Fud3F2K1AzUE1tZXk5NWgyYmZqcUMzY05UcWRuSnlPWWZmaGRNNVphOE5oQis2VyttRmdybUFlajY3SFptMSthMmVneXNtMTJTYi8weS8yRno0THZNY3kvcWpMTGYvczlPQjI2S0Zza2J6Z3ltMk96NFJqNVF2Z0JEZ3plcnhDT1JxbXhocVBKOWs4VTgvUG5UWjZVOUtZbERNZnQwalFxOGoxcXJQOTJjTnJsbmlXRE0yTlhtRFRjZkd4UHNwRjkvWTZ3Mzl4azc5K3RWV2ErbG9jenM1K3ZscHYrSStrN2p1M2ZGUjRmNFdpVUdtazQvdjUveFQ2Q2ZjOU1lR0I2Zllkam4vdUMwNmNPcUZrMi9zMko5czI4NFJnOU56T2owSm8vcFUvNmpnOHV6bDUzSjg4RElCeG9uT0VZK081ZHB1VnV4Zno4S1orWnNaL0VEa3lSVnQvaDJDL3ppZXpkN2ZNK1RHODR6TXFmQjZkZDlrMi81VGdyTXozeUZwLzZIZ0RoUUdNTVIrL241NW5EaWozVy9NOWVFODNST3d4TGNNdjZEa2V2cTRMVHEvTFBET2tQeDhYUFo3NDdTWDh2Y3NLRndZWHU5OVk4TlFnSGJJMHdITyt1L2NVWFB4MFVmN3NZSTN2OXc0dzdNLzUyOVIyT3gzWUpUays4SWUvRDlJZkRISE5wY0RycDErcjIvTzNyNEVMbWc0djBBQWdIR21NNDNqOTJiUDUzN1VtdCtjSGRQZUp2VmQvaHlPN0NOZURtUmZrZVpwNXdqT2kyWVhEbUgvODFzMXNFWnc4NUpaUmV3Z0ZiWXd6SFFlK1U1a0VNcWp6MXl2aGIxWGM0bnRneGM2YmpPYnRiVjNWSzdjVnhRWlAwZVNzY001NnUvdVBpS2NFRTdObVBKNU1IVE53czgvN2xqajcrQitEZEhDdUZZOFl5TGFWSGpUSkhPUHdHVlQ3VU1mNVc5UjJPSnFlZmtUMTc4TDlhaGErNStzalVuNW10TFZZNHRwcVgrak56TElwNVpkUGdkSjBIdGc3T3RPOXluUDhCcU1JUi9DQTBOb1REYjFEbEdlUGpiMVYzNFlobzlYejIzQVkxZThoWHpWNHJkSmpzU2VtajNmT0ZvMkw1WU9HMTNZUFQxVnRQRGM0TWlXek9MV2pQMGNnUFFtTkRPUHdHVlk0WkZYK3JFb1pqOXNtaDlSNlczWk16TGh4akh3NGZVOTkyOU42NTh5dW0zaERrQzBmdUc0OVdNeU1yZnpMekV5ODhUWHJJaEFPTk1SenQzaXRaT0c3cUgzK3IyanJJN1puOXN1ZGl3bUhHUEhsYjZJcXBWNzJVKzViMDEwVXg0Vmg5VkxBUmQ4bGp3bytnNnZVZ1JSZFBlMHA2eUlRRGpTOGNGejNiL0syWnNiZEs1SS92MXY1UC9LM3FQeHltMzArUm8xZzZuNUg5UHZLRkR3N09IdzZ6NnNMZ2RMdW5ReXZZTzNQTXlVcS9pdytaY0tDUmhXUHdkdGMrbVA4V1N0T3VhSGYybi9sdlVsdEh4eXJDWVJhMWVDUnk1VjdkTTN1RFZiK2s4NGRqN0tKejBxZVB2TnNyZCs4ZWV3OUpuNDVlZEFIaGdLd1JoZU9QelhaSnRwTzQwdVNKWi8xekovL1ZEZUFkUjdWamY0b2NYUC9rb21BM2pDYi9pd21IYVo1NTBXLzBldTdPU3l3Ym5LNDNYMzdJaEFPTkp4d3ptNjFad3A5diszcEQ3MVYxRjQ3Ykx3cGR2YXNWeVFtL0QvczZkSEdYTjRQVGJlZkdoTU04MnpwOU11Q2p6TEZ1NXYyUGdzUDdIdG5OODVDOW0yTS9ESTlnT0xpdjlZUFFtRFNhY093MWExVHRQVVZ2V1AzcWszM1gxVjA0NVAwNGFsejIxZW01ODFVN3RVdWYvdlo3WERoMmZ5MDRYVFY3VUZ2MmE0OXRub2tOUjRJOVJ3bEg0OVJvd3RIMUJ2OXJ1Mmg3UEhUbU9OOTFwZHlQWTluUWV0ZmNOM3N1YVRpTW1YWHgzZG16YmVhbVQ4NCtMUzRjWm5Ed0lXZnMrcGs1VlI0OUpIMXlTd2ZmUXlZY2FEemg2SGh6TFlaalhMOEx6L0ZkVnhPT3pPNWlWaml1emg1aWUyZ3dsRjZwOXh5TnVIL2dxNWx6UFk0TnZ1VzRkYlc0Y0J5Y3VlYUdyc0hwdGNFWVFPUDZHZlBlZHRJRE9PT0s3RjBuQlh2VzVndEh6Mk4yaVgzVUtEK05KaHlWZzJveEhDZU9lZHY3OVdqY093NWJyWWJEbUZXeUF3NmVGUXc1L09zVGNlRXdtU2hhNGJpN1RkNDNTV0VjNUxiNGFUVGg2SFZWTFlhai9hMFB0L2RkMThEQ2tSdlk1NFlUMHllN2pJNE54M21Wd1IwSUJ4SnJOT0ZvZDFzdGh1T0FhWU9sb2NUVEdsbzRzdHRWajV5V1B0bHVUR3c0VHI0NmZVSTRrRnlqQ2NkTmg5VmlPQjdieFgrQWZUMkhvL2Y2MWh6VEN6STdyQTBLOWlZZDE0eHdvUFFhVFRoK05yVVlqalozVCtucnU2NmV3ekZyNVlOdU9pUjBlY0llbVYxT01xbDc0LzhJQjBxUGNDU3gvL1FoenJEaFdhVVB4eG5aQVF1VHZHNW43V1VxSDUvM1hIYk1zd21qTTBmNHZmOVpzRldsN1dEQ2dkSnJMT0g0NnhkelorL1VtU20vZlZzeGQ3ZnZLb2YwYnpacXBmbHQyODM4WWY0RlV6WitjTGRXbDU1aVRsMWxuMGNPMkdaQXEzWC9lbDZjZTh6cnd6dUhYK2E3enJzNXRtbnp5TzNtQjFNa2FjSmhiUTN0L0cxNGZkc0V1NDVXaDZOYWp6Tzc3ZEhoZ1g2dnZiTk1kaCt3ZllJeWpCMFF1eDlIbmk5SDh6NEFZNDRjR0p4bXc5SHB1L0MxWjdlTC9HQTBLbzBqSE1kUFB5TEJ5Qm5GbUhiaHRndnVGSy94dnVPd1pDZFVMUHdkUjFSbUNzZ2dISTZwVDA3SzNEYytISW5mY2RoNlpRWUNZUXJJeFUvNWgyUHlmYTl0UHFXRVA5cnZnTlBiQ2Y5Y0RUTWNPMlhtWjJ2K0hPRkFMU2ozY0p6KzhKd1MvdGhZYjkzZ2JGM3hIbFp2cWROd2pGbzlPSzUrN0NadENBZHFRYm1INDg4RjB1MXF6MlhEN1NVTjhSMUhtOE15NDNHczlFWGNZZldHY0tBQTVSNk9lVnZOK2JIWjdLWDMydm1QeXc2WTNMSzRhWmltL0xiNjlhbXZWWCs0Y1p6WjhNV2RacTU2d1pSL3A3NVVuVGIvbTlWUzM2bXU4KzRMbDRUbktRclVjemlhYkhySHh0WTFIUTg5TVhQdWtkMWloZzVNSXh4UUsvZHd6Tms1eWFSSnBUSmc3UHJmMmN2cU9Sekd2UHoxc0RXbTV4WjMvbm5yUGJ0bkw2UW1wQ1ljcUFYbEhvN1R6cTdiY0d6NnViM00yUnhiTkh0emJBSURkbXh4dy9WTC8zcnZncGZDMDkybWg5Z0l6MkpmUXdpSEpiUTV0aWlFbzFFcTkzQzh2WDdkaG1QckQreGx6anVPb3Rudk9Bb1ZURU5mVERpS2ZBQnBoS05SS3Zkd0hIdEozWVlqdTVtelJvTU54OVBCMndYQ2dWcFE3dUU0NllLNkRjY2VyOWpMR21nNHhsL3pYSENHY0tBV2xIczQ3bXhidCtIWTl6bDdXY01NUjgvdnN3K0djS0FXbEhzNERydXBic09SM1RaU281N0Q4ZWNscHpqTEZwM1M3SWpjQmNLQldsRHU0YmpncExvTng1UE9sc2w2RHNlNVF3N2VlTjh2UXZHb0dyaG9VZmdHaEFPMW9OekRzZUtYc3c1clVzSWZuTitBc2U0R3lwcHcxS051SzcvMzMvLyt1dndLZjF0NXZMMDdHRkFMeWlzY1hWWll1UFcvbHg0MmI1VTJKZnhaQUxUS0t4d0FHZ1RDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUN0Z1lZRHdHS0NjQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBRFhDQVVDTmNBQlFJeHdBMUFnSEFEWENBVUNOY0FCUUl4d0ExQWdIQURYQ0FVQ05jQUJRSXh3QTFBZ0hBTFgvQnpJM2Znckk2dU5BQUFBQUFFbEZUa1N1UW1DQyIvPgoJPC9kZWZzPgoJPHN0eWxlPgoJPC9zdHlsZT4KCTx1c2UgaWQ9IkJhY2tncm91bmQiIGhyZWY9IiNpbWcxIiB4PSItNzUiIHk9Ii00MDAiLz4KPC9zdmc+" alt="Hard Mode Lifestyle" width="142" height="43" decoding="async" />
         </a>
-        <p class="cta-note">Acesso imediato · Garantia de 7 dias</p>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="section-light">
-  <div class="wrap">
-    <div class="section-heading">
-      <h2 class="display section-title">Resultados de verdade</h2>
-      <p class="section-sub">Veja os depoimentos de alguns dos nossos alunos.</p>
-    </div>
-
-    <div class="testimonials-shell">
-      <div class="testimonials-track">
-        <article class="testimonial">
-          <div class="testimonial__head">
-            <img class="testimonial__photo" src="./assets/img/testimonial-gabriel.png" alt="Gabriel S.">
-            <div class="testimonial__identity">
-              <div class="testimonial__author">Gabriel S.</div>
-              <div class="testimonial__meta">30 anos</div>
-            </div>
-          </div>
-          <span class="testimonial__pill">Mais constância</span>
-          <p class="testimonial__text">“Eu sempre começava a semana animado e largava tudo no meio. A Arquitetura me ajudou a parar de viver no improviso. Hoje minha rotina é simples, mas eu cumpro.”</p>
-        </article>
-
-        <article class="testimonial">
-          <div class="testimonial__head">
-            <img class="testimonial__photo" src="./assets/img/testimonial-julio.png" alt="Júlio César">
-            <div class="testimonial__identity">
-              <div class="testimonial__author">Júlio César</div>
-              <div class="testimonial__meta">29 anos</div>
-            </div>
-          </div>
-          <span class="testimonial__pill">Mais clareza</span>
-          <p class="testimonial__text">“A aula do Necrológio me pegou. Eu percebi que tava só empurrando a vida com a barriga. Depois disso, cortei as distrações e comecei a fazer tudo com mais direção.”</p>
-        </article>
-
-        <article class="testimonial">
-          <div class="testimonial__head">
-            <img class="testimonial__photo" src="./assets/img/testimonial-rodrigo.png" alt="Rodrigo M.">
-            <div class="testimonial__identity">
-              <div class="testimonial__author">Rodrigo M.</div>
-              <div class="testimonial__meta">32 anos</div>
-            </div>
-          </div>
-          <span class="testimonial__pill">Mais respeito próprio</span>
-          <p class="testimonial__text">“Não foi só produtividade. Eu voltei a treinar, melhorei meu sono e parei de prometer o que eu sabia que não ia fazer. Isso mudou minha cabeça.”</p>
-        </article>
-
-        <article class="testimonial">
-          <div class="testimonial__head">
-            <img class="testimonial__photo" src="./assets/img/testimonial-daniel.png" alt="Daniel L.">
-            <div class="testimonial__identity">
-              <div class="testimonial__author">Daniel L.</div>
-              <div class="testimonial__meta">31 anos</div>
-            </div>
-          </div>
-          <span class="testimonial__pill">Mais estrutura</span>
-          <p class="testimonial__text">“Eu já tinha comprado cursos e largado vários. Nesse aqui eu consegui aplicar. Não é um monte de teoria. É direto e te coloca pra agir.”</p>
-        </article>
-
-
-        <article class="testimonial">
-          <div class="testimonial__head">
-            <img class="testimonial__photo" src="./assets/img/testimonial-igor.png" alt="Igor C.">
-            <div class="testimonial__identity">
-              <div class="testimonial__author">Igor C.</div>
-              <div class="testimonial__meta">33 anos</div>
-            </div>
-          </div>
-          <span class="testimonial__pill">Mais postura</span>
-          <p class="testimonial__text">“Eu tinha muito conteúdo na cabeça, mas passava a imagem de um cara perdido. Depois que comecei a aplicar a Arquitetura, minha postura mudou. Hoje eu me comunico melhor, me imponho mais e não fico mais com cara de quem está sempre em dúvida.”</p>
-        </article>
-
-        <article class="testimonial">
-          <div class="testimonial__head">
-            <img class="testimonial__photo" src="./assets/img/testimonial-joao-vitor.png" alt="João Vitor">
-            <div class="testimonial__identity">
-              <div class="testimonial__author">João Vitor</div>
-              <div class="testimonial__meta">25 anos</div>
-            </div>
-          </div>
-          <span class="testimonial__pill">Menos distração</span>
-          <p class="testimonial__text">“Meu problema era viver no automático: celular, reels no Instagram, rotina bagunçada e zero foco. A Arquitetura me ajudou a colocar ordem na rotina. Finalmente eu voltei a me sentir no controle da minha vida.”</p>
-        </article>
-
-        <article class="testimonial">
-          <div class="testimonial__head">
-            <img class="testimonial__photo" src="./assets/img/testimonial-gabriele.png" alt="Gabriele A.">
-            <div class="testimonial__identity">
-              <div class="testimonial__author">Gabriele A.</div>
-              <div class="testimonial__meta">27 anos</div>
-            </div>
-          </div>
-          <span class="testimonial__pill">Mais direção</span>
-          <p class="testimonial__text">“O que mais me marcou foi ver que disciplina não é viver no limite, e sim ter direção. A Arquitetura me ajudou a sair da confusão mental, organizar melhor minha semana e parar de começar um monte de coisa sem terminar nenhuma.”</p>
-        </article>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="section-soft-dark">
-  <div class="wrap">
-    <div class="section-heading">
-      <h2 class="display section-title">Pra quem é</h2>
-      <p class="section-sub">Se você sabe que está ficando para trás e não quer continuar se enganando, é pra você.</p>
-    </div>
-
-    <div class="forwho-grid">
-      <div class="forwho-col forwho-col--yes">
-        <p class="forwho-col__title">É pra você se...</p>
-        <ul class="forwho-list forwho-list--yes">
-          <li>você sente que sua vida não anda e já cansou de fingir que está tudo bem.</li>
-          <li>você vive prometendo disciplina, mas perde horas no Instagram e com distrações vazias.</li>
-          <li>você já tentou mudar várias vezes e sempre voltou pro mesmo lugar.</li>
-          <li>você olha pra si mesmo e sabe que hoje ainda está abaixo do homem que poderia ser.</li>
-          <li>você quer respeito, mas ainda se sente fraco, perdido e sem firmeza.</li>
-          <li>você morre de medo de chegar aos 30 do mesmo jeito que está agora.</li>
-          <li>você sente falta de direção, de base e de um motivo grande pra levantar da cama.</li>
-        </ul>
-      </div>
-
-      <div class="forwho-col forwho-col--no">
-        <p class="forwho-col__title">Não é pra você se...</p>
-        <ul class="forwho-list forwho-list--no">
-          <li>você quer só motivação passageira e frase motivacional.</li>
-          <li>você ainda está procurando atalho em vez de mudança de verdade.</li>
-          <li>você prefere culpar rotina, família, dinheiro ou falta de tempo.</li>
-          <li>você não está disposto a olhar com honestidade pro homem que você é hoje.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="section-light">
-  <div class="wrap">
-    <div class="section-heading">
-      <h2 class="display section-title">Os pilares da Arquitetura</h2>
-      <p class="section-sub foundation-note">O Arquitetura da Rotina trabalha os três pilares da Hard Mode ao mesmo tempo, porque não adianta ter força física e continuar perdido por dentro.</p>
-    </div>
-
-    <div class="foundation-grid">
-      <article class="foundation-card">
-        <div class="foundation-card__n">01</div>
-        <div class="foundation-card__title">Força Prática</div>
-        <p class="body-p">Corpo forte não é vaidade, é responsabilidade. A disciplina construída no treino transborda para cada outra área da sua vida.</p>
-      </article>
-
-      <article class="foundation-card">
-        <div class="foundation-card__n">02</div>
-        <div class="foundation-card__title">Trabalho</div>
-        <p class="body-p">Foco profundo, geração de valor e construção de caráter. O bloco que separa quem conquista de quem fica apenas ocupado.</p>
-      </article>
-
-      <article class="foundation-card">
-        <div class="foundation-card__n">03</div>
-        <div class="foundation-card__title">Vida Espiritual</div>
-        <p class="body-p">Sem dogma, sem abstração — é o norte que te mantém de pé quando tudo o mais cede.</p>
-      </article>
-    </div>
-  </div>
-</section>
-<section class="section-soft-dark">
-  <div class="wrap">
-    <div class="section-heading">
-      <h2 class="display section-title">As 10 aulas da Arquitetura</h2>
-      <p class="section-sub">O que você vai ver em cada aula e, principalmente, o que isso muda na prática na sua vida.</p>
-    </div>
-
-    <div class="lessons-grid">
-      <article class="lesson-card">
-        <div class="lesson-card__top">
-          <div class="lesson-card__badge">⚰️</div>
-          <div class="lesson-card__n">Aula 01</div>
-        </div>
-        <h3 class="lesson-card__title">O Necrológio</h3>
-        <p class="lesson-card__learn">Você escreve a história que quer que contem no seu velório e cria um filtro claro para cada decisão importante da sua vida.</p>
-        <div class="lesson-card__shift"><strong>O que muda em você</strong>Você para de viver no automático e começa a agir com direção, peso e consciência do homem que quer se tornar.</div>
-      </article>
-
-      <article class="lesson-card">
-        <div class="lesson-card__top">
-          <div class="lesson-card__badge">🧠</div>
-          <div class="lesson-card__n">Aula 02</div>
-        </div>
-        <h3 class="lesson-card__title">Engenharia de Comportamento</h3>
-        <p class="lesson-card__learn">Você aprende a identificar o que drena sua energia e a eliminar esses sabotadores com um método, não com força de vontade.</p>
-        <div class="lesson-card__shift"><strong>O que muda em você</strong>Você ganha clareza sobre seus gatilhos e deixa de repetir os mesmos erros toda semana.</div>
-      </article>
-
-      <article class="lesson-card">
-        <div class="lesson-card__top">
-          <div class="lesson-card__badge">🌙</div>
-          <div class="lesson-card__n">Aula 03</div>
-        </div>
-        <h3 class="lesson-card__title">Sono Estratégico</h3>
-        <p class="lesson-card__learn">Você entende a base fisiológica que determina a qualidade do dia seguinte e aprende a parar de sabotar sua própria energia.</p>
-        <div class="lesson-card__shift"><strong>O que muda em você</strong>Mais disposição, mais lucidez e mais capacidade de cumprir o que precisa ser feito.</div>
-      </article>
-
-      <article class="lesson-card">
-        <div class="lesson-card__top">
-          <div class="lesson-card__badge">☀️</div>
-          <div class="lesson-card__n">Aula 04</div>
-        </div>
-        <h3 class="lesson-card__title">Manhã Blindada</h3>
-        <p class="lesson-card__learn">As primeiras horas do dia deixam de ser reativas e se tornam suas, com uma estrutura que reduz ansiedade e dispersão.</p>
-        <div class="lesson-card__shift"><strong>O que muda em você</strong>Você começa o dia no comando, não sendo arrastado pelo celular, pela pressa e pelo improviso.</div>
-      </article>
-
-      <article class="lesson-card">
-        <div class="lesson-card__top">
-          <div class="lesson-card__badge">🎯</div>
-          <div class="lesson-card__n">Aula 05</div>
-        </div>
-        <h3 class="lesson-card__title">Trabalho Profundo</h3>
-        <p class="lesson-card__learn">Você aprende a proteger seus blocos de foco absoluto para produzir, estudar e construir algo que tenha valor de verdade.</p>
-        <div class="lesson-card__shift"><strong>O que muda em você</strong>Menos distração, mais execução, mais produtividade e um progresso visível na sua vida profissional.</div>
-      </article>
-
-      <article class="lesson-card">
-        <div class="lesson-card__top">
-          <div class="lesson-card__badge">🏋️</div>
-          <div class="lesson-card__n">Aula 06</div>
-        </div>
-        <h3 class="lesson-card__title">Força Prática</h3>
-        <p class="lesson-card__learn">A disciplina construída no treino passa a funcionar como base da sua postura, energia e responsabilidade.</p>
-        <div class="lesson-card__shift"><strong>O que muda em você</strong>Seu corpo começa a acompanhar suas decisões. E isso se transforma em confiança, presença e firmeza.</div>
-      </article>
-
-      <article class="lesson-card">
-        <div class="lesson-card__top">
-          <div class="lesson-card__badge">🛐</div>
-          <div class="lesson-card__n">Aula 07</div>
-        </div>
-        <h3 class="lesson-card__title">Vida Espiritual</h3>
-        <p class="lesson-card__learn">Você aprende a cultivar silêncio, direção e ordem interna para não viver refém de ruído, ansiedade e vazio existencial.</p>
-        <div class="lesson-card__shift"><strong>O que muda em você</strong>Mais paz, mais eixo e uma base espiritual capaz de sustentar o resto da construção.</div>
-      </article>
-
-      <article class="lesson-card">
-        <div class="lesson-card__top">
-          <div class="lesson-card__badge">🧱</div>
-          <div class="lesson-card__n">Aula 08</div>
-        </div>
-        <h3 class="lesson-card__title">Engenharia de Ambiente</h3>
-        <p class="lesson-card__learn">Você redesenha o ambiente para facilitar o comportamento certo e dificultar as ações que costumam te derrubar.</p>
-        <div class="lesson-card__shift"><strong>O que muda em você</strong>Você para de depender só de força mental e cria um cenário que trabalha a seu favor todos os dias.</div>
-      </article>
-
-      <article class="lesson-card">
-        <div class="lesson-card__top">
-          <div class="lesson-card__badge">🛡️</div>
-          <div class="lesson-card__n">Aula 09</div>
-        </div>
-        <h3 class="lesson-card__title">Protocolo de Crise</h3>
-        <p class="lesson-card__learn">Quando o dia der errado, você sabe como reagir sem transformar uma falha isolada em semanas de queda e culpa.</p>
-        <div class="lesson-card__shift"><strong>O que muda em você</strong>Você ganha resiliência e para de desmoronar toda vez que sai do plano.</div>
-      </article>
-
-      <article class="lesson-card">
-        <div class="lesson-card__top">
-          <div class="lesson-card__badge">🤝</div>
-          <div class="lesson-card__n">Aula 10</div>
-        </div>
-        <h3 class="lesson-card__title">O Compromisso</h3>
-        <p class="lesson-card__learn">Você encerra a Arquitetura com um posicionamento claro e o início definitivo da construção do homem que decidiu ser.</p>
-        <div class="lesson-card__shift"><strong>O que muda em você</strong>Você sai com uma decisão consolidada, não com mais um pico de empolgação que some em poucos dias.</div>
-      </article>
-    </div>
-  </div>
-</section>
-<section class="section-light">
-  <div class="wrap">
-    <div class="section-heading">
-      <h2 class="display section-title">Bônus inclusos na Arquitetura</h2>
-      <p class="section-sub">Os bônus entram pra facilitar a aplicação da Arquitetura no dia a dia.</p>
-    </div>
-
-    <div class="bonus-grid">
-      <article class="bonus-card">
-        <div class="bonus-card__media">
-          <img src="./assets/img/hma-guia-treino-em-casa-capa.png" alt="Guia de Treino em Casa">
-        </div>
-        <div class="bonus-card__content">
-          <p class="bonus-card__lbl">Bônus 01</p>
-          <div class="bonus-card__title">Guia de Treino em Casa</div>
-          <p class="bonus-card__desc">Pra você sair da desculpa e manter o treino mesmo quando não dá pra ir pra academia.</p>
-          <p class="bonus-card__val">Valor: R$37</p>
-        </div>
-      </article>
-
-      <article class="bonus-card">
-        <div class="bonus-card__media">
-          <img src="./assets/img/hma-diario-do-homem-de-base-capa.png" alt="Diário do Homem de Base">
-        </div>
-        <div class="bonus-card__content">
-          <p class="bonus-card__lbl">Bônus 02</p>
-          <div class="bonus-card__title">Diário do Homem de Base</div>
-          <p class="bonus-card__desc">Pra organizar a cabeça, registrar o que importa e não deixar a Arquitetura virar só intenção.</p>
-          <p class="bonus-card__val">Valor: R$27</p>
-        </div>
-      </article>
-
-      <article class="bonus-card">
-        <div class="bonus-card__media">
-          <img src="./assets/img/hma-biblioteca-hard-mode-capa.png" alt="Biblioteca Hard Mode">
-        </div>
-        <div class="bonus-card__content">
-          <p class="bonus-card__lbl">Bônus 03</p>
-          <div class="bonus-card__title">Biblioteca Hard Mode</div>
-          <p class="bonus-card__desc">Pra estudar com direção e alimentar a mente com conhecimento que realmente fortalece você.</p>
-          <p class="bonus-card__val">Valor: R$17</p>
-        </div>
-      </article>
-
-      <article class="bonus-card">
-        <div class="bonus-card__media">
-          <img src="./assets/img/hma-checklist-auditoria-semanal-capa.png" alt="Checklist de Auditoria Semanal">
-        </div>
-        <div class="bonus-card__content">
-          <p class="bonus-card__lbl">Bônus 04</p>
-          <div class="bonus-card__title">Checklist de Auditoria Semanal</div>
-          <p class="bonus-card__desc">Pra revisar a semana, corrigir a rota rápido e não deixar a bagunça acumular.</p>
-          <p class="bonus-card__val">Valor: R$17</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-<section class="section-soft-dark">
-  <div class="wrap">
-    <div class="story-layout">
-      <div>
-        <h2 class="display section-title">Eu vivi isso na prática</h2>
-
-        <p class="body-p" style="margin-top:24px;">
-          Por anos, usei meu próprio conhecimento como escudo. Lia os livros, fazia as listas, entendia os conceitos. Como se conhecer fosse o mesmo que viver.
-        </p>
-        <p class="body-p">
-          Até que eu tive que admitir uma coisa: o problema nunca foi falta de informação. Faltava uma identidade sólida o suficiente para continuar quando a motivação acabasse.
-        </p>
-        <p class="body-p">
-          A Arquitetura da Rotina nasceu dessa virada.
-        </p>
-      </div>
-
-      <div>
-        <div class="story-quote">
-          <p>"A disciplina não é um fardo — é o pedágio para o seu chamado. Parei de tentar me organizar e comecei a construir quem eu queria ser."</p>
-          <span class="attr">LEONARDO MONTANHOLI,<br>CRIADOR DA HARD MODE LIFESTYLE.</span>
+        <div class="top-status" aria-label="Aula disponível">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>Acesso gratuito disponível</span>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-<section class="section-light" id="oferta">
-  <div class="wrap">
-    <div class="offer-wrap">
-      <div class="offer-card">
-        <div class="offer-card__logo"><img src="./assets/img/protocolo-logo.png" alt="Protocolo de Força Prática"></div>
-        <p class="offer-card__includes">10 aulas + 4 bônus · Acesso imediato</p>
+    </header>
 
-        <ul class="offer-stack">
-          <li><span>Arquitetura da Rotina (10 aulas)</span><span>R$147</span></li>
-          <li><span>Guia de Treino em Casa</span><span>R$37</span></li>
-          <li><span>Diário do Homem de Base</span><span>R$27</span></li>
-          <li><span>Biblioteca Hard Mode</span><span>R$17</span></li>
-          <li><span>Checklist de Auditoria Semanal</span><span>R$17</span></li>
-          <li class="offer-stack__total"><span>Total</span><span>R$245</span></li>
-        </ul>
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <div class="hero-kicker">
+              <strong>Aula gratuita</strong>
+              <span>Arquitetura da Rotina</span>
+            </div>
 
-        <div class="offer-price-block">
-          <p class="price-anchor price-anchor--offer">DE <span>R$245</span> POR</p>
-          <p class="offer-installments offer-installments--inline">9x de <strong>R$8,80</strong></p>
-          <p class="offer-cash offer-cash--inline"><span class="offer-or-inline">ou</span> <strong>R$67</strong> <span class="offer-cash-suffix">à vista</span></p>
+            <h1>Você já tentou ter uma rotina disciplinada várias vezes e nunca conseguiu manter por mais de duas semanas?</h1>
+
+            <p class="hero-subheadline">Essa aula gratuita mostra o motivo — e o passo a passo pra você não cair nesse mesmo ciclo de novo. Você vai entender por que toda rotina que tentou até hoje durou pouco e sair com um método completo, desde a noite anterior até o primeiro bloco de trabalho do dia seguinte.</p>
+
+            <div class="hero-actions">
+              <a class="btn" href="#formulario">
+                Quero assistir a aula agora
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <p class="hero-micro">Gratuito. Direto ao ponto. Você recebe o acesso assim que preencher o formulário.</p>
+            </div>
+
+            <div class="hero-rail" aria-label="Características da aula">
+              <div class="rail-item"><span class="rail-index">01</span><span class="rail-value">Método prático e aplicável</span></div>
+              <div class="rail-item"><span class="rail-index">02</span><span class="rail-value">Sem fórmula motivacional</span></div>
+              <div class="rail-item"><span class="rail-index">03</span><span class="rail-value">Do sono ao trabalho profundo</span></div>
+            </div>
+          </div>
+
+          <aside class="form-card reveal" id="formulario" aria-labelledby="form-title">
+            <div class="form-card-head">
+              <div>
+                <p class="eyebrow">Libere seu acesso</p>
+                <h2 id="form-title">Arquitetura da Rotina</h2>
+              </div>
+              <span class="access-tag">Gratuito</span>
+            </div>
+
+            <form class="lead-form" id="ib-form-qW89lMOofPBFFDQn497l4Q" novalidate>
+              <div class="field">
+                <label for="name">Nome completo</label>
+                <div class="input-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                  <input id="name" name="name" type="text" autocomplete="name" placeholder="Como podemos te chamar?" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="email">Melhor e-mail</label>
+                <div class="input-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                  <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="voce@email.com" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="phone">WhatsApp</label>
+                <div class="input-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"/></svg>
+                  <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999" required />
+                </div>
+                <p class="field-hint">Vamos usar esse número só pra te avisar quando a aula estiver liberada e enviar o material de apoio. Nada de spam.</p>
+              </div>
+
+              <!-- Honeypot anti-spam: deve permanecer invisível. -->
+              <input class="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+              <button class="btn submit-btn" type="submit">
+                Liberar meu acesso agora
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+
+              <p class="form-message" data-ib-msg role="status" aria-live="polite"></p>
+
+              <p class="privacy-line">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                Seus dados ficam protegidos e não serão compartilhados com terceiros.
+              </p>
+            </form>
+
+            <div class="success-box" id="success-box" role="status" aria-live="polite">
+              <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
+              </div>
+              <h3>Acesso solicitado.</h3>
+              <p id="success-message">Recebido! Seu acesso será enviado pelos canais informados.</p>
+            </div>
+          </aside>
         </div>
+      </section>
 
-        <div class="offer-cta">
-          <a href="https://pay.hotmart.com/Y103675280S?checkoutMode=10" class="btn btn--primary" id="btn-checkout">
-            Quero Começar Agora
+      <section class="section">
+        <div class="container section-grid">
+          <div class="reveal">
+            <p class="eyebrow">Para quem é</p>
+            <h2 class="section-title">O problema nunca foi falta de disciplina.</h2>
+          </div>
+
+          <div class="qualification-card reveal">
+            <p>Essa aula é pra você que já começou dezenas de rotinas, treinos e planos de produtividade, seguiu por uma ou duas semanas com muito esforço, e sempre voltou pro mesmo lugar quando apareceu um dia ruim. <strong>O problema nunca foi você não ter disciplina.</strong> Foi tentar sustentar uma rotina sem entender como o seu próprio corpo e a sua própria cabeça funcionam.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section muted">
+        <div class="container section-grid">
+          <div class="reveal">
+            <p class="eyebrow">Conteúdo da aula</p>
+            <h2 class="section-title">Um sistema para os dias bons — e principalmente para os ruins.</h2>
+          </div>
+
+          <div class="benefit-list">
+            <article class="benefit reveal">
+              <span class="benefit-number">01</span>
+              <p><strong>O exercício de 20 minutos que define, de uma vez, o que realmente importa pra você</strong> — e vira um filtro simples pra decidir o que fazer e o que não fazer no seu dia a dia.</p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </article>
+
+            <article class="benefit reveal">
+              <span class="benefit-number">02</span>
+              <p><strong>Por que a sua vontade de fazer as coisas some sempre no mesmo horário do dia</strong>, e o motivo biológico por trás disso, que não tem nada a ver com preguiça.</p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </article>
+
+            <article class="benefit reveal">
+              <span class="benefit-number">03</span>
+              <p><strong>Um método simples de três passos pra você dormir melhor</strong>, mesmo trabalhando até tarde ou com a cabeça cheia de coisa.</p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </article>
+
+            <article class="benefit reveal">
+              <span class="benefit-number">04</span>
+              <p><strong>A sequência exata dos primeiros minutos depois de acordar</strong> que muda o resto do seu dia, sem precisar de mais café nem de força de vontade.</p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </article>
+
+            <article class="benefit reveal">
+              <span class="benefit-number">05</span>
+              <p><strong>As três perguntas que você responde antes de começar a trabalhar</strong>, pra parar de perder a manhã inteira decidindo por onde começar.</p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </article>
+
+            <article class="benefit reveal">
+              <span class="benefit-number">06</span>
+              <p><strong>Como montar o ambiente ao seu redor pra facilitar o que você precisa fazer</strong> e dificultar o que você está tentando evitar, sem precisar ficar resistindo o tempo inteiro.</p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </article>
+
+            <article class="benefit reveal">
+              <span class="benefit-number">07</span>
+              <p><strong>A regra que evita que um dia ruim vire uma semana inteira perdida</strong>, pra você voltar rápido depois de qualquer tropeço.</p>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="credibility">
+        <div class="container credibility-inner reveal">
+          <p class="eyebrow">Método Hard Mode</p>
+          <blockquote>Construído com base em como o sono, a dopamina e o corpo funcionam de verdade — sem fórmula mágica e sem discurso motivacional vazio.</blockquote>
+
+          <div class="protocol-grid" aria-label="Pilares do método">
+            <div class="protocol-item"><span>Pilar 01</span><strong>Biologia antes da motivação</strong></div>
+            <div class="protocol-item"><span>Pilar 02</span><strong>Ambiente antes da resistência</strong></div>
+            <div class="protocol-item"><span>Pilar 03</span><strong>Consistência antes da perfeição</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div class="container final-cta-inner reveal">
+          <p class="eyebrow">Comece pelo sistema</p>
+          <h2 class="section-title">Pare de recomeçar do zero a cada duas semanas.</h2>
+          <p>Assista à aula gratuita e aprenda a montar uma rotina que continua funcionando mesmo quando a vontade desaparece.</p>
+          <a class="btn" href="#formulario">
+            Quero assistir a aula agora
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <div class="offer-badges">
-            <span class="offer-badge">100% Online</span>
-            <span class="offer-badge">Acesso Imediato</span>
-          </div>
         </div>
-      </div>
+      </section>
+    </main>
 
-      <div class="guarantee">
-        <div class="guarantee__icon">🛡</div>
-        <div>
-          <div class="guarantee__title">Garantia de 7 dias</div>
-          <p class="guarantee__text">Acessa a Arquitetura. Aplica as primeiras aulas. Se em 7 dias você não sentir que essa é a base que estava te faltando, <strong>devolvo 100% do seu dinheiro.</strong></p>
-        </div>
+    <footer>
+      <div class="container footer-inner">
+        <span>© 2026 HARD MODE LIFESTYLE</span>
+        <span>Arquitetura da Rotina · Aula gratuita</span>
       </div>
-    </div>
+    </footer>
   </div>
-</section>
-<section class="close section-dark">
-  <div class="wrap wrap--narrow">
-    <h2 class="display close__hl">
-      <span class="close-line">NO DIA DO SEU VELÓRIO</span>
-      <span class="close-line">NINGUÉM VAI LEMBRAR</span>
-      <span class="close-line">DO QUE VOCÊ <em>TENTOU</em> SER</span>
-    </h2>
-    <p class="close__sub">
-      Vão lembrar do homem que você foi<br>
-      para as pessoas que dependiam de você.<br>
-      A construção começa com uma decisão —<br>
-      <span class="close__sub-plain">e essa decisão é agora.</span>
-    </p>
-    <div class="close__cta">
-      <a href="https://pay.hotmart.com/Y103675280S?checkoutMode=10" class="btn btn--ghost">QUERO A ARQUITETURA POR R$67</a>
-    </div>
-    <p class="close__final">Não deixe para amanhã o homem<br>que você precisa ser hoje.</p>
-  </div>
-</section>
-<section class="section-light">
-  <div class="wrap wrap--narrow">
-    <div class="section-heading">
-      <h2 class="display section-title">Dúvidas frequentes</h2>
-    </div>
 
-    <div style="margin-top:30px;">
-      <div class="faq-item">
-        <div class="faq-q">Por quanto tempo tenho acesso? <span>+</span></div>
-        <p class="faq-a">Acesso por 1 ano. Você paga uma vez e tem acesso por 1 ano a todas as atualizações que fizermos na Arquitetura durante o período.</p>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Precisa de experiência prévia? <span>+</span></div>
-        <p class="faq-a">Não. A Arquitetura foi construído para quem está começando do zero.</p>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Em quanto tempo vejo resultado? <span>+</span></div>
-        <p class="faq-a"><strong>A primeira clareza vem na Aula 1.</strong> A fundação começa a se formar nas primeiras duas semanas.</p>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Isso é um curso de produtividade? <span>+</span></div>
-        <p class="faq-a">Não. É um protocolo de construção de identidade. Produtividade é consequência.</p>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">E se eu não gostar? <span>+</span></div>
-        <p class="faq-a"><strong>7 dias de garantia incondicional.</strong> Você acessa, aplica e decide. Devolvo 100% do seu investimento.</p>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Já tentei muita coisa. Por que seria diferente? <span>+</span></div>
-        <p class="faq-a">O problema nunca foi o método, é que você não tinha uma base. <strong>A Arquitetura começa pelo alicerce.</strong></p>
-      </div>
-    </div>
-  </div>
-</section>
-<footer>
-  <p>© 2026 Hard Mode Inc. · <a href="#">Privacidade</a> · <a href="#">Termos</a> · <a href="#">Suporte</a></p>
-  <p style="margin-top:4px;">Resultados individuais podem variar.</p>
-</footer>
+  <script>
+    (function () {
+      const form = document.getElementById('ib-form-qW89lMOofPBFFDQn497l4Q');
+      const successBox = document.getElementById('success-box');
+      const successMessage = document.getElementById('success-message');
+      const phoneInput = document.getElementById('phone');
+      const msg = form.querySelector('[data-ib-msg]');
 
+      phoneInput.addEventListener('input', function (event) {
+        let value = event.target.value.replace(/\D/g, '').slice(0, 11);
+        if (value.length > 10) {
+          value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+        } else if (value.length > 6) {
+          value = value.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+        } else if (value.length > 2) {
+          value = value.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+        } else if (value.length) {
+          value = value.replace(/(\d{0,2})/, '($1');
+        }
+        event.target.value = value;
+      });
 
-<script>
-(function(){
-  const track = document.querySelector('.testimonials-track');
-  if(!track) return;
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-  let scrollEndTimer = null;
-  let isAdjusting = false;
+        const fields = Array.from(form.querySelectorAll('input[required]'));
+        let valid = true;
 
-  function getOriginals() {
-    return Array.from(track.children).filter(el => !el.dataset.clone);
-  }
+        fields.forEach(function (field) {
+          const fieldValid = field.checkValidity() && field.value.trim() !== '';
+          field.setAttribute('aria-invalid', String(!fieldValid));
+          if (!fieldValid) valid = false;
+        });
 
-  function cleanupClones() {
-    track.querySelectorAll('[data-clone="true"]').forEach(el => el.remove());
-    track.dataset.loopReady = 'false';
-    delete track.dataset.loopWidth;
-    delete track.dataset.cardWidth;
-  }
+        if (!valid) {
+          const firstInvalid = fields.find(function (field) {
+            return field.getAttribute('aria-invalid') === 'true';
+          });
+          if (firstInvalid) firstInvalid.focus();
+          return;
+        }
 
-  function setupInfiniteTestimonials(){
-    if (window.innerWidth >= 640) {
-      cleanupClones();
-      return;
-    }
+        const btn = form.querySelector('button[type="submit"]');
+        const originalButton = btn.innerHTML;
+        btn.disabled = true;
+        btn.textContent = 'Enviando...';
+        msg.className = 'form-message';
+        msg.textContent = '';
 
-    if (track.dataset.loopReady === 'true') return;
+        const data = {};
+        new FormData(form).forEach(function (value, key) {
+          data[key] = value;
+        });
 
-    const originals = getOriginals();
-    if (!originals.length) return;
+        fetch('https://internalbusiness.vercel.app/api/forms/qW89lMOofPBFFDQn497l4Q', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+          .then(function (response) {
+            return response.json()
+              .catch(function () { return {}; })
+              .then(function (body) {
+                return { ok: response.ok, body: body };
+              });
+          })
+          .then(function (result) {
+            if (result.ok && result.body.ok) {
+              if (result.body.redirectUrl) {
+                window.location.href = result.body.redirectUrl;
+                return;
+              }
 
-    cleanupClones();
+              form.style.display = 'none';
+              successMessage.textContent = result.body.message || 'Recebido! Seu acesso será enviado pelos canais informados.';
+              successBox.classList.add('visible');
+              return;
+            }
 
-    const fragStart = document.createDocumentFragment();
-    const fragEnd = document.createDocumentFragment();
+            msg.className = 'form-message visible error';
+            msg.textContent = (result.body && result.body.error) || 'Não foi possível enviar. Tente novamente.';
+            btn.disabled = false;
+            btn.innerHTML = originalButton;
+          })
+          .catch(function () {
+            msg.className = 'form-message visible error';
+            msg.textContent = 'Falha de conexão. Tente novamente.';
+            btn.disabled = false;
+            btn.innerHTML = originalButton;
+          });
+      });
 
-    originals.forEach(card => {
-      const before = card.cloneNode(true);
-      before.dataset.clone = 'true';
-      fragStart.appendChild(before);
+      form.querySelectorAll('input').forEach(function (input) {
+        input.addEventListener('input', function () {
+          input.removeAttribute('aria-invalid');
+          if (msg.classList.contains('visible')) {
+            msg.className = 'form-message';
+            msg.textContent = '';
+          }
+        });
+      });
 
-      const after = card.cloneNode(true);
-      after.dataset.clone = 'true';
-      fragEnd.appendChild(after);
-    });
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
 
-    track.insertBefore(fragStart, track.firstChild);
-    track.appendChild(fragEnd);
-
-    requestAnimationFrame(() => {
-      const firstOriginal = getOriginals()[0];
-      if (!firstOriginal) return;
-
-      const style = getComputedStyle(track);
-      const gap = parseFloat(style.columnGap || style.gap || 12);
-      const cardWidth = firstOriginal.getBoundingClientRect().width + gap;
-      const loopWidth = originals.length * cardWidth;
-
-      track.dataset.cardWidth = String(cardWidth);
-      track.dataset.loopWidth = String(loopWidth);
-      track.dataset.loopReady = 'true';
-
-      // começa no bloco central
-      track.scrollLeft = loopWidth;
-    });
-  }
-
-  function adjustIfNeeded() {
-    if (window.innerWidth >= 640) return;
-    if (track.dataset.loopReady !== 'true') return;
-    if (isAdjusting) return;
-
-    const loopWidth = parseFloat(track.dataset.loopWidth || '0');
-    const cardWidth = parseFloat(track.dataset.cardWidth || '0');
-    if (!loopWidth || !cardWidth) return;
-
-    const left = track.scrollLeft;
-    const viewport = track.clientWidth;
-
-    // só reposiciona quando realmente chega perto das bordas
-    const leftEdge = cardWidth * 0.5;
-    const rightEdge = (loopWidth * 2) - viewport - (cardWidth * 0.5);
-
-    let target = null;
-
-    if (left <= leftEdge) {
-      target = left + loopWidth;
-    } else if (left >= rightEdge) {
-      target = left - loopWidth;
-    }
-
-    if (target === null) return;
-
-    isAdjusting = true;
-
-    const prevSnap = track.style.scrollSnapType;
-    const prevBehavior = track.style.scrollBehavior;
-
-    track.style.scrollSnapType = 'none';
-    track.style.scrollBehavior = 'auto';
-    track.scrollLeft = target;
-
-    requestAnimationFrame(() => {
-      track.style.scrollSnapType = prevSnap || '';
-      track.style.scrollBehavior = prevBehavior || '';
-      isAdjusting = false;
-    });
-  }
-
-  track.addEventListener('scroll', () => {
-    if (window.innerWidth >= 640) return;
-    if (track.dataset.loopReady !== 'true') return;
-    if (isAdjusting) return;
-
-    clearTimeout(scrollEndTimer);
-    scrollEndTimer = setTimeout(adjustIfNeeded, 90);
-  }, { passive: true });
-
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      cleanupClones();
-      setupInfiniteTestimonials();
-    }, 120);
-  });
-
-  window.addEventListener('load', setupInfiniteTestimonials);
-})();
-</script>
-
-
-<script>
-(function () {
-  const poster = document.getElementById('video-poster');
-  const host = document.getElementById('hero-video-host');
-
-  if (!poster || !host) return;
-
-  let started = false;
-
-  poster.addEventListener('click', function () {
-    if (started) return;
-    started = true;
-
-    poster.disabled = true;
-    poster.classList.add('is-loading');
-
-    const iframe = document.createElement('iframe');
-    iframe.src = 'https://www.youtube.com/embed/2RSMdLowagc?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1';
-    iframe.title = 'Protocolo de Força Prática';
-    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-    iframe.allowFullscreen = true;
-    iframe.setAttribute('allowfullscreen', '');
-
-    iframe.addEventListener('load', function () {
-      setTimeout(function () {
-        poster.classList.add('is-hidden');
-      }, 320);
-    }, { once: true });
-
-    host.appendChild(iframe);
-  }, { once: true });
-})();
-</script>
-
+      document.querySelectorAll('.reveal').forEach(function (element) {
+        observer.observe(element);
+      });
+    })();
+  </script>
 </body>
 </html>
